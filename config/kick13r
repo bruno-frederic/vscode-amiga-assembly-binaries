@@ -1,5 +1,5 @@
--cc=vbccm68k -quiet -hunkdebug -sd %s -o= %s %s -O=%ld -no-cpp-warn -I%%VBCC%%/targets/m68k-kick13/include
--ccv=vbccm68k -hunkdebug -sd %s -o= %s %s -O=%ld -no-cpp-warn -I%%VBCC%%/targets/m68k-kick13/include
+-cc=vbccm68k -quiet -sd %s -o= %s %s -O=%ld -no-cpp-warn -I%%VBCC%%/targets/m68k-kick13/include
+-ccv=vbccm68k -sd %s -o= %s %s -O=%ld -no-cpp-warn -I%%VBCC%%/targets/m68k-kick13/include
 -as=vasmm68k_mot -quiet -Fhunk -kick1hunks -nowarn=62 %s -o %s
 -asv=vasmm68k_mot -Fhunk -kick1hunks -nowarn=62 %s -o %s
 -rm=del %s
@@ -12,3 +12,4 @@
 -ul=-l%s
 -cf=-F%s
 -ml=1000
+-hunkdebug

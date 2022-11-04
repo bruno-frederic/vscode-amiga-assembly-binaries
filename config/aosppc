@@ -2,7 +2,6 @@
 -no-regnames
 -no-multiple-ccs
 -madd
--c99
 -use-commons
 -cc=vbccppc -quiet %s -o= %s %s -O=%ld -I%%VBCC%%/targets/ppc-amigaos/include -D__amigaos4__
 -ccv=vbccppc %s -o= %s %s -O=%ld -I%%VBCC%%/targets/ppc-amigaos/include -D__amigaos4__
