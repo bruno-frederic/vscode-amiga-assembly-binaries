@@ -23,13 +23,13 @@ VOID __FreeIFF(__reg("a6") void *, __reg("a0") struct IFFHandle * iff)="\tjsr\t-
 LONG __ReadChunkBytes(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") APTR buf, __reg("d0") LONG numBytes)="\tjsr\t-60(a6)";
 #define ReadChunkBytes(iff, buf, numBytes) __ReadChunkBytes(IFFParseBase, (iff), (buf), (numBytes))
 
-LONG __WriteChunkBytes(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") CONST APTR buf, __reg("d0") LONG numBytes)="\tjsr\t-66(a6)";
+LONG __WriteChunkBytes(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") CONST_APTR buf, __reg("d0") LONG numBytes)="\tjsr\t-66(a6)";
 #define WriteChunkBytes(iff, buf, numBytes) __WriteChunkBytes(IFFParseBase, (iff), (buf), (numBytes))
 
 LONG __ReadChunkRecords(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") APTR buf, __reg("d0") LONG bytesPerRecord, __reg("d1") LONG numRecords)="\tjsr\t-72(a6)";
 #define ReadChunkRecords(iff, buf, bytesPerRecord, numRecords) __ReadChunkRecords(IFFParseBase, (iff), (buf), (bytesPerRecord), (numRecords))
 
-LONG __WriteChunkRecords(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") CONST APTR buf, __reg("d0") LONG bytesPerRecord, __reg("d1") LONG numRecords)="\tjsr\t-78(a6)";
+LONG __WriteChunkRecords(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") CONST_APTR buf, __reg("d0") LONG bytesPerRecord, __reg("d1") LONG numRecords)="\tjsr\t-78(a6)";
 #define WriteChunkRecords(iff, buf, bytesPerRecord, numRecords) __WriteChunkRecords(IFFParseBase, (iff), (buf), (bytesPerRecord), (numRecords))
 
 LONG __PushChunk(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id, __reg("d2") LONG size)="\tjsr\t-84(a6)";
@@ -65,34 +65,34 @@ LONG __CollectionChunks(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, 
 LONG __StopOnExit(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id)="\tjsr\t-150(a6)";
 #define StopOnExit(iff, type, id) __StopOnExit(IFFParseBase, (iff), (type), (id))
 
-struct StoredProperty * __FindProp(__reg("a6") void *, __reg("a0") CONST struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id)="\tjsr\t-156(a6)";
+struct StoredProperty * __FindProp(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id)="\tjsr\t-156(a6)";
 #define FindProp(iff, type, id) __FindProp(IFFParseBase, (iff), (type), (id))
 
-struct CollectionItem * __FindCollection(__reg("a6") void *, __reg("a0") CONST struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id)="\tjsr\t-162(a6)";
+struct CollectionItem * __FindCollection(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id)="\tjsr\t-162(a6)";
 #define FindCollection(iff, type, id) __FindCollection(IFFParseBase, (iff), (type), (id))
 
-struct ContextNode * __FindPropContext(__reg("a6") void *, __reg("a0") CONST struct IFFHandle * iff)="\tjsr\t-168(a6)";
+struct ContextNode * __FindPropContext(__reg("a6") void *, __reg("a0") struct IFFHandle * iff)="\tjsr\t-168(a6)";
 #define FindPropContext(iff) __FindPropContext(IFFParseBase, (iff))
 
-struct ContextNode * __CurrentChunk(__reg("a6") void *, __reg("a0") CONST struct IFFHandle * iff)="\tjsr\t-174(a6)";
+struct ContextNode * __CurrentChunk(__reg("a6") void *, __reg("a0") struct IFFHandle * iff)="\tjsr\t-174(a6)";
 #define CurrentChunk(iff) __CurrentChunk(IFFParseBase, (iff))
 
-struct ContextNode * __ParentChunk(__reg("a6") void *, __reg("a0") CONST struct ContextNode * contextNode)="\tjsr\t-180(a6)";
+struct ContextNode * __ParentChunk(__reg("a6") void *, __reg("a0") struct ContextNode * contextNode)="\tjsr\t-180(a6)";
 #define ParentChunk(contextNode) __ParentChunk(IFFParseBase, (contextNode))
 
 struct LocalContextItem * __AllocLocalItem(__reg("a6") void *, __reg("d0") LONG type, __reg("d1") LONG id, __reg("d2") LONG ident, __reg("d3") LONG dataSize)="\tjsr\t-186(a6)";
 #define AllocLocalItem(type, id, ident, dataSize) __AllocLocalItem(IFFParseBase, (type), (id), (ident), (dataSize))
 
-APTR __LocalItemData(__reg("a6") void *, __reg("a0") CONST struct LocalContextItem * localItem)="\tjsr\t-192(a6)";
+APTR __LocalItemData(__reg("a6") void *, __reg("a0") struct LocalContextItem * localItem)="\tjsr\t-192(a6)";
 #define LocalItemData(localItem) __LocalItemData(IFFParseBase, (localItem))
 
-VOID __SetLocalItemPurge(__reg("a6") void *, __reg("a0") struct LocalContextItem * localItem, __reg("a1") CONST struct Hook * purgeHook)="\tjsr\t-198(a6)";
+VOID __SetLocalItemPurge(__reg("a6") void *, __reg("a0") struct LocalContextItem * localItem, __reg("a1") struct Hook * purgeHook)="\tjsr\t-198(a6)";
 #define SetLocalItemPurge(localItem, purgeHook) __SetLocalItemPurge(IFFParseBase, (localItem), (purgeHook))
 
 VOID __FreeLocalItem(__reg("a6") void *, __reg("a0") struct LocalContextItem * localItem)="\tjsr\t-204(a6)";
 #define FreeLocalItem(localItem) __FreeLocalItem(IFFParseBase, (localItem))
 
-struct LocalContextItem * __FindLocalItem(__reg("a6") void *, __reg("a0") CONST struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id, __reg("d2") LONG ident)="\tjsr\t-210(a6)";
+struct LocalContextItem * __FindLocalItem(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG type, __reg("d1") LONG id, __reg("d2") LONG ident)="\tjsr\t-210(a6)";
 #define FindLocalItem(iff, type, id, ident) __FindLocalItem(IFFParseBase, (iff), (type), (id), (ident))
 
 LONG __StoreLocalItem(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") struct LocalContextItem * localItem, __reg("d0") LONG position)="\tjsr\t-216(a6)";
@@ -101,7 +101,7 @@ LONG __StoreLocalItem(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __
 VOID __StoreItemInContext(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("a1") struct LocalContextItem * localItem, __reg("a2") struct ContextNode * contextNode)="\tjsr\t-222(a6)";
 #define StoreItemInContext(iff, localItem, contextNode) __StoreItemInContext(IFFParseBase, (iff), (localItem), (contextNode))
 
-VOID __InitIFF(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG flags, __reg("a1") CONST struct Hook * streamHook)="\tjsr\t-228(a6)";
+VOID __InitIFF(__reg("a6") void *, __reg("a0") struct IFFHandle * iff, __reg("d0") LONG flags, __reg("a1") struct Hook * streamHook)="\tjsr\t-228(a6)";
 #define InitIFF(iff, flags, streamHook) __InitIFF(IFFParseBase, (iff), (flags), (streamHook))
 
 VOID __InitIFFasDOS(__reg("a6") void *, __reg("a0") struct IFFHandle * iff)="\tjsr\t-234(a6)";

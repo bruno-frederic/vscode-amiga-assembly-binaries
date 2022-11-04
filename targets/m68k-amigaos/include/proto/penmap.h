@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_PENMAP_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/penmap_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *PenMapBase;
 #include <inline/penmap.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/penmap_protos.h>
+#endif
 #else
 #include <pragma/penmap_lib.h>
 #endif

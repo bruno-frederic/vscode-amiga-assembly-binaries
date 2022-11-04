@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_PICASSO96_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/Picasso96_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *P96Base;
 #include <inline/Picasso96.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/Picasso96_protos.h>
+#endif
 #else
 #include <pragma/Picasso96_lib.h>
 #endif

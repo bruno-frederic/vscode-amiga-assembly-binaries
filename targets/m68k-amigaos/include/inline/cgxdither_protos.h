@@ -23,8 +23,10 @@ BOOL __ConvertMap(__reg("a6") void *, __reg("a0") struct BitMap * sbm, __reg("a1
 void __MapHistogram(__reg("a6") void *, __reg("a0") struct BitMap * bm, __reg("a1") ULONG  * histogram)="\tjsr\t-60(a6)";
 #define MapHistogram(bm, histogram) __MapHistogram(CGXDitherBase, (bm), (histogram))
 
+#if !defined(__SMALL_DATA__)
 ULONG __RemapMapColours(__reg("a6") void *, __reg("a0") struct BitMap * sbm, __reg("a1") struct BitMap * dbm, __reg("a2") UBYTE  * remaparr1, __reg("a3") UBYTE  * remaparr2, __reg("a4") struct ColorMap * remapcm, __reg("d0") ULONG flags)="\tjsr\t-66(a6)";
 #define RemapMapColours(sbm, dbm, remaparr1, remaparr2, remapcm, flags) __RemapMapColours(CGXDitherBase, (sbm), (dbm), (remaparr1), (remaparr2), (remapcm), (flags))
+#endif
 
 struct BitMap * __CreateMapMask(__reg("a6") void *, __reg("a0") struct BitMap * sbm, __reg("d0") ULONG transcol, __reg("d1") ULONG flags)="\tjsr\t-72(a6)";
 #define CreateMapMask(sbm, transcol, flags) __CreateMapMask(CGXDitherBase, (sbm), (transcol), (flags))

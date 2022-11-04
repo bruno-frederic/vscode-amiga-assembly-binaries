@@ -5,11 +5,13 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_TIMER_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/timer_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
-extern struct Library *TimerBase;
+extern struct Device *TimerBase;
 #endif
 
 #ifdef __GNUC__
@@ -19,7 +21,9 @@ extern struct Library *TimerBase;
 #include <inline/timer.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/timer_protos.h>
+#endif
 #else
 #include <pragma/timer_lib.h>
 #endif

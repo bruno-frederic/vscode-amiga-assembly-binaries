@@ -82,31 +82,50 @@ void __p96WriteTrueColorData(__reg("a6") void *, __reg("a0") struct TrueColorInf
 void __p96ReadTrueColorData(__reg("a6") void *, __reg("a0") struct TrueColorInfo * tci, __reg("d0") UWORD DestX, __reg("d1") UWORD DestY, __reg("a1") struct RastPort * rp, __reg("d2") UWORD SrcX, __reg("d3") UWORD SrcY, __reg("d4") UWORD SizeX, __reg("d5") UWORD SizeY)="\tjsr\t-138(a6)";
 #define p96ReadTrueColorData(tci, DestX, DestY, rp, SrcX, SrcY, SizeX, SizeY) __p96ReadTrueColorData(P96Base, (tci), (DestX), (DestY), (rp), (SrcX), (SrcY), (SizeX), (SizeY))
 
-struct Window * __p96PIP_OpenTagList(__reg("a6") void *, __reg("a0") struct TagItem * x1)="\tjsr\t-156(a6)";
-#define p96PIP_OpenTagList(x1) __p96PIP_OpenTagList(P96Base, (x1))
+struct Window * __p96PIP_OpenTagList(__reg("a6") void *, __reg("a0") struct TagItem * Tags)="\tjsr\t-144(a6)";
+#define p96PIP_OpenTagList(Tags) __p96PIP_OpenTagList(P96Base, (Tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-struct Window * __p96PIP_OpenTags(__reg("a6") void *, ULONG x1, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-156(a6)\n\tmovea.l\t(a7)+,a0";
+struct Window * __p96PIP_OpenTags(__reg("a6") void *, ULONG Tags, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-144(a6)\n\tmovea.l\t(a7)+,a0";
 #define p96PIP_OpenTags(...) __p96PIP_OpenTags(P96Base, __VA_ARGS__)
 #endif
 
-BOOL __p96PIP_Close(__reg("a6") void *, __reg("a0") struct Window * x1)="\tjsr\t-162(a6)";
-#define p96PIP_Close(x1) __p96PIP_Close(P96Base, (x1))
+BOOL __p96PIP_Close(__reg("a6") void *, __reg("a0") struct Window * Window)="\tjsr\t-150(a6)";
+#define p96PIP_Close(Window) __p96PIP_Close(P96Base, (Window))
 
-LONG __p96PIP_SetTagList(__reg("a6") void *, __reg("a0") struct Window * x1, __reg("a1") struct TagItem * x2)="\tjsr\t-168(a6)";
-#define p96PIP_SetTagList(x1, x2) __p96PIP_SetTagList(P96Base, (x1), (x2))
-
-#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-LONG __p96PIP_SetTags(__reg("a6") void *, __reg("a0") struct Window * x1, ULONG x2, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-168(a6)\n\tmovea.l\t(a7)+,a1";
-#define p96PIP_SetTags(x1, ...) __p96PIP_SetTags(P96Base, (x1), __VA_ARGS__)
-#endif
-
-LONG __p96PIP_GetTagList(__reg("a6") void *, __reg("a0") struct Window * x1, __reg("a1") struct TagItem * x2)="\tjsr\t-174(a6)";
-#define p96PIP_GetTagList(x1, x2) __p96PIP_GetTagList(P96Base, (x1), (x2))
+LONG __p96PIP_SetTagList(__reg("a6") void *, __reg("a0") struct Window * Window, __reg("a1") struct TagItem * Tags)="\tjsr\t-156(a6)";
+#define p96PIP_SetTagList(Window, Tags) __p96PIP_SetTagList(P96Base, (Window), (Tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-LONG __p96PIP_GetTags(__reg("a6") void *, __reg("a0") struct Window * x1, ULONG x2, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-174(a6)\n\tmovea.l\t(a7)+,a1";
-#define p96PIP_GetTags(x1, ...) __p96PIP_GetTags(P96Base, (x1), __VA_ARGS__)
+LONG __p96PIP_SetTags(__reg("a6") void *, __reg("a0") struct Window * Window, ULONG Tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-156(a6)\n\tmovea.l\t(a7)+,a1";
+#define p96PIP_SetTags(Window, ...) __p96PIP_SetTags(P96Base, (Window), __VA_ARGS__)
 #endif
+
+LONG __p96PIP_GetTagList(__reg("a6") void *, __reg("a0") struct Window * Window, __reg("a1") struct TagItem * Tags)="\tjsr\t-162(a6)";
+#define p96PIP_GetTagList(Window, Tags) __p96PIP_GetTagList(P96Base, (Window), (Tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+LONG __p96PIP_GetTags(__reg("a6") void *, __reg("a0") struct Window * Window, ULONG Tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-162(a6)\n\tmovea.l\t(a7)+,a1";
+#define p96PIP_GetTags(Window, ...) __p96PIP_GetTags(P96Base, (Window), __VA_ARGS__)
+#endif
+
+LONG __p96GetRTGDataTagList(__reg("a6") void *, __reg("a0") struct TagItem * Tags)="\tjsr\t-180(a6)";
+#define p96GetRTGDataTagList(Tags) __p96GetRTGDataTagList(P96Base, (Tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+LONG __p96GetRTGDataTags(__reg("a6") void *, ULONG Tags, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-180(a6)\n\tmovea.l\t(a7)+,a0";
+#define p96GetRTGDataTags(...) __p96GetRTGDataTags(P96Base, __VA_ARGS__)
+#endif
+
+LONG __p96GetBoardDataTagList(__reg("a6") void *, __reg("d0") ULONG Board, __reg("a0") struct TagItem * Tags)="\tjsr\t-186(a6)";
+#define p96GetBoardDataTagList(Board, Tags) __p96GetBoardDataTagList(P96Base, (Board), (Tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+LONG __p96GetBoardDataTags(__reg("a6") void *, __reg("d0") ULONG Board, ULONG Tags, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-186(a6)\n\tmovea.l\t(a7)+,a0";
+#define p96GetBoardDataTags(Board, ...) __p96GetBoardDataTags(P96Base, (Board), __VA_ARGS__)
+#endif
+
+ULONG __p96EncodeColor(__reg("a6") void *, __reg("d0") RGBFTYPE RGBFormat, __reg("d1") ULONG Color)="\tjsr\t-192(a6)";
+#define p96EncodeColor(RGBFormat, Color) __p96EncodeColor(P96Base, (RGBFormat), (Color))
 
 #endif /*  _VBCCINLINE_PICASSO96_H  */

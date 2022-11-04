@@ -77,7 +77,7 @@ VOID __ThinLayerInfo(__reg("a6") void *, __reg("a0") struct Layer_Info * li)="\t
 LONG __MoveLayerInFrontOf(__reg("a6") void *, __reg("a0") struct Layer * layer_to_move, __reg("a1") struct Layer * other_layer)="\tjsr\t-168(a6)";
 #define MoveLayerInFrontOf(layer_to_move, other_layer) __MoveLayerInFrontOf(LayersBase, (layer_to_move), (other_layer))
 
-struct Region * __InstallClipRegion(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("a1") CONST struct Region * region)="\tjsr\t-174(a6)";
+struct Region * __InstallClipRegion(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("a1") struct Region * region)="\tjsr\t-174(a6)";
 #define InstallClipRegion(layer, region) __InstallClipRegion(LayersBase, (layer), (region))
 
 LONG __MoveSizeLayer(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("d0") LONG dx, __reg("d1") LONG dy, __reg("d2") LONG dw, __reg("d3") LONG dh)="\tjsr\t-180(a6)";
@@ -92,7 +92,7 @@ struct Layer * __CreateBehindHookLayer(__reg("a6") void *, __reg("a0") struct La
 struct Hook * __InstallLayerHook(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("a1") struct Hook * hook)="\tjsr\t-198(a6)";
 #define InstallLayerHook(layer, hook) __InstallLayerHook(LayersBase, (layer), (hook))
 
-struct Hook * __InstallLayerInfoHook(__reg("a6") void *, __reg("a0") struct Layer_Info * li, __reg("a1") CONST struct Hook * hook)="\tjsr\t-204(a6)";
+struct Hook * __InstallLayerInfoHook(__reg("a6") void *, __reg("a0") struct Layer_Info * li, __reg("a1") struct Hook * hook)="\tjsr\t-204(a6)";
 #define InstallLayerInfoHook(li, hook) __InstallLayerInfoHook(LayersBase, (li), (hook))
 
 VOID __SortLayerCR(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("d0") LONG dx, __reg("d1") LONG dy)="\tjsr\t-210(a6)";
@@ -100,5 +100,17 @@ VOID __SortLayerCR(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("
 
 VOID __DoHookClipRects(__reg("a6") void *, __reg("a0") struct Hook * hook, __reg("a1") struct RastPort * rport, __reg("a2") CONST struct Rectangle * rect)="\tjsr\t-216(a6)";
 #define DoHookClipRects(hook, rport, rect) __DoHookClipRects(LayersBase, (hook), (rport), (rect))
+
+BOOL __LayerOccluded(__reg("a6") void *, __reg("a0") struct Layer * layer)="\tjsr\t-222(a6)";
+#define LayerOccluded(layer) __LayerOccluded(LayersBase, (layer))
+
+LONG __HideLayer(__reg("a6") void *, __reg("a0") struct Layer * layer)="\tjsr\t-228(a6)";
+#define HideLayer(layer) __HideLayer(LayersBase, (layer))
+
+LONG __ShowLayer(__reg("a6") void *, __reg("a0") struct Layer * layer, __reg("a1") struct Layer * in_front_of)="\tjsr\t-234(a6)";
+#define ShowLayer(layer, in_front_of) __ShowLayer(LayersBase, (layer), (in_front_of))
+
+BOOL __SetLayerInfoBounds(__reg("a6") void *, __reg("a0") struct Layer_Info * li, __reg("a1") CONST struct Rectangle * bounds)="\tjsr\t-240(a6)";
+#define SetLayerInfoBounds(li, bounds) __SetLayerInfoBounds(LayersBase, (li), (bounds))
 
 #endif /*  _VBCCINLINE_LAYERS_H  */

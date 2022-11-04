@@ -14,7 +14,7 @@ LONG __Close(__reg("a6") void *, __reg("d1") BPTR file)="\tjsr\t-36(a6)";
 LONG __Read(__reg("a6") void *, __reg("d1") BPTR file, __reg("d2") APTR buffer, __reg("d3") LONG length)="\tjsr\t-42(a6)";
 #define Read(file, buffer, length) __Read(DOSBase, (file), (buffer), (length))
 
-LONG __Write(__reg("a6") void *, __reg("d1") BPTR file, __reg("d2") CONST APTR buffer, __reg("d3") LONG length)="\tjsr\t-48(a6)";
+LONG __Write(__reg("a6") void *, __reg("d1") BPTR file, __reg("d2") CONST_APTR buffer, __reg("d3") LONG length)="\tjsr\t-48(a6)";
 #define Write(file, buffer, length) __Write(DOSBase, (file), (buffer), (length))
 
 BPTR __Input(__reg("a6") void *)="\tjsr\t-54(a6)";
@@ -101,7 +101,8 @@ LONG __Execute(__reg("a6") void *, __reg("d1") CONST_STRPTR string, __reg("d2") 
 APTR __AllocDosObject(__reg("a6") void *, __reg("d1") ULONG type, __reg("d2") CONST struct TagItem * tags)="\tjsr\t-228(a6)";
 #define AllocDosObject(type, tags) __AllocDosObject(DOSBase, (type), (tags))
 
-#define AllocDosObjectTagList(type, tags) __AllocDosObject(DOSBase, (type), (tags))
+APTR __AllocDosObjectTagList(__reg("a6") void *, __reg("d1") ULONG type, __reg("d2") CONST struct TagItem * tags)="\tjsr\t-228(a6)";
+#define AllocDosObjectTagList(type, tags) __AllocDosObjectTagList(DOSBase, (type), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
 APTR __AllocDosObjectTags(__reg("a6") void *, __reg("d1") ULONG type, ULONG tags, ...)="\tmove.l\td2,-(a7)\n\tmove.l\ta7,d2\n\taddq.l\t#4,d2\n\tjsr\t-228(a6)\n\tmove.l\t(a7)+,d2";
@@ -144,13 +145,13 @@ VOID __AbortPkt(__reg("a6") void *, __reg("d1") struct MsgPort * port, __reg("d2
 BOOL __LockRecord(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") ULONG offset, __reg("d3") ULONG length, __reg("d4") ULONG mode, __reg("d5") ULONG timeout)="\tjsr\t-270(a6)";
 #define LockRecord(fh, offset, length, mode, timeout) __LockRecord(DOSBase, (fh), (offset), (length), (mode), (timeout))
 
-BOOL __LockRecords(__reg("a6") void *, __reg("d1") struct RecordLock * recArray, __reg("d2") ULONG timeout)="\tjsr\t-276(a6)";
+BOOL __LockRecords(__reg("a6") void *, __reg("d1") CONST struct RecordLock * recArray, __reg("d2") ULONG timeout)="\tjsr\t-276(a6)";
 #define LockRecords(recArray, timeout) __LockRecords(DOSBase, (recArray), (timeout))
 
 BOOL __UnLockRecord(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") ULONG offset, __reg("d3") ULONG length)="\tjsr\t-282(a6)";
 #define UnLockRecord(fh, offset, length) __UnLockRecord(DOSBase, (fh), (offset), (length))
 
-BOOL __UnLockRecords(__reg("a6") void *, __reg("d1") struct RecordLock * recArray)="\tjsr\t-288(a6)";
+BOOL __UnLockRecords(__reg("a6") void *, __reg("d1") CONST struct RecordLock * recArray)="\tjsr\t-288(a6)";
 #define UnLockRecords(recArray) __UnLockRecords(DOSBase, (recArray))
 
 BPTR __SelectInput(__reg("a6") void *, __reg("d1") BPTR fh)="\tjsr\t-294(a6)";
@@ -171,7 +172,7 @@ LONG __UnGetC(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") LONG characte
 LONG __FRead(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") APTR block, __reg("d3") ULONG blocklen, __reg("d4") ULONG number)="\tjsr\t-324(a6)";
 #define FRead(fh, block, blocklen, number) __FRead(DOSBase, (fh), (block), (blocklen), (number))
 
-LONG __FWrite(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") CONST APTR block, __reg("d3") ULONG blocklen, __reg("d4") ULONG number)="\tjsr\t-330(a6)";
+LONG __FWrite(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") CONST_APTR block, __reg("d3") ULONG blocklen, __reg("d4") ULONG number)="\tjsr\t-330(a6)";
 #define FWrite(fh, block, blocklen, number) __FWrite(DOSBase, (fh), (block), (blocklen), (number))
 
 STRPTR __FGets(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") STRPTR buf, __reg("d3") ULONG buflen)="\tjsr\t-336(a6)";
@@ -188,7 +189,7 @@ VOID __FWritef(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") CONST_STRPTR
 #define FWritef(fh, ...) __FWritef(DOSBase, (fh), __VA_ARGS__)
 #endif
 
-LONG __VFPrintf(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") CONST_STRPTR format, __reg("d3") CONST APTR argarray)="\tjsr\t-354(a6)";
+LONG __VFPrintf(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") CONST_STRPTR format, __reg("d3") CONST_APTR argarray)="\tjsr\t-354(a6)";
 #define VFPrintf(fh, format, argarray) __VFPrintf(DOSBase, (fh), (format), (argarray))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
@@ -250,7 +251,7 @@ LONG __SetFileSize(__reg("a6") void *, __reg("d1") BPTR fh, __reg("d2") LONG pos
 LONG __SetIoErr(__reg("a6") void *, __reg("d1") LONG result)="\tjsr\t-462(a6)";
 #define SetIoErr(result) __SetIoErr(DOSBase, (result))
 
-BOOL __Fault(__reg("a6") void *, __reg("d1") LONG code, __reg("d2") STRPTR header, __reg("d3") STRPTR buffer, __reg("d4") LONG len)="\tjsr\t-468(a6)";
+BOOL __Fault(__reg("a6") void *, __reg("d1") LONG code, __reg("d2") CONST_STRPTR header, __reg("d3") STRPTR buffer, __reg("d4") LONG len)="\tjsr\t-468(a6)";
 #define Fault(code, header, buffer, len) __Fault(DOSBase, (code), (header), (buffer), (len))
 
 BOOL __PrintFault(__reg("a6") void *, __reg("d1") LONG code, __reg("d2") CONST_STRPTR header)="\tjsr\t-474(a6)";
@@ -265,7 +266,8 @@ struct CommandLineInterface * __Cli(__reg("a6") void *)="\tjsr\t-492(a6)";
 struct Process * __CreateNewProc(__reg("a6") void *, __reg("d1") CONST struct TagItem * tags)="\tjsr\t-498(a6)";
 #define CreateNewProc(tags) __CreateNewProc(DOSBase, (tags))
 
-#define CreateNewProcTagList(tags) __CreateNewProc(DOSBase, (tags))
+struct Process * __CreateNewProcTagList(__reg("a6") void *, __reg("d1") CONST struct TagItem * tags)="\tjsr\t-498(a6)";
+#define CreateNewProcTagList(tags) __CreateNewProcTagList(DOSBase, (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
 struct Process * __CreateNewProcTags(__reg("a6") void *, ULONG tags, ...)="\tmove.l\td1,-(a7)\n\tmove.l\ta7,d1\n\taddq.l\t#4,d1\n\tjsr\t-498(a6)\n\tmove.l\t(a7)+,d1";
@@ -278,19 +280,19 @@ LONG __RunCommand(__reg("a6") void *, __reg("d1") BPTR seg, __reg("d2") LONG sta
 struct MsgPort * __GetConsoleTask(__reg("a6") void *)="\tjsr\t-510(a6)";
 #define GetConsoleTask() __GetConsoleTask(DOSBase)
 
-struct MsgPort * __SetConsoleTask(__reg("a6") void *, __reg("d1") CONST struct MsgPort * task)="\tjsr\t-516(a6)";
+struct MsgPort * __SetConsoleTask(__reg("a6") void *, __reg("d1") struct MsgPort * task)="\tjsr\t-516(a6)";
 #define SetConsoleTask(task) __SetConsoleTask(DOSBase, (task))
 
 struct MsgPort * __GetFileSysTask(__reg("a6") void *)="\tjsr\t-522(a6)";
 #define GetFileSysTask() __GetFileSysTask(DOSBase)
 
-struct MsgPort * __SetFileSysTask(__reg("a6") void *, __reg("d1") CONST struct MsgPort * task)="\tjsr\t-528(a6)";
+struct MsgPort * __SetFileSysTask(__reg("a6") void *, __reg("d1") struct MsgPort * task)="\tjsr\t-528(a6)";
 #define SetFileSysTask(task) __SetFileSysTask(DOSBase, (task))
 
 STRPTR __GetArgStr(__reg("a6") void *)="\tjsr\t-534(a6)";
 #define GetArgStr() __GetArgStr(DOSBase)
 
-BOOL __SetArgStr(__reg("a6") void *, __reg("d1") CONST_STRPTR string)="\tjsr\t-540(a6)";
+STRPTR __SetArgStr(__reg("a6") void *, __reg("d1") STRPTR string)="\tjsr\t-540(a6)";
 #define SetArgStr(string) __SetArgStr(DOSBase, (string))
 
 struct Process * __FindCliProc(__reg("a6") void *, __reg("d1") ULONG num)="\tjsr\t-546(a6)";
@@ -326,7 +328,8 @@ BPTR __GetProgramDir(__reg("a6") void *)="\tjsr\t-600(a6)";
 LONG __SystemTagList(__reg("a6") void *, __reg("d1") CONST_STRPTR command, __reg("d2") CONST struct TagItem * tags)="\tjsr\t-606(a6)";
 #define SystemTagList(command, tags) __SystemTagList(DOSBase, (command), (tags))
 
-#define System(command, tags) __SystemTagList(DOSBase, (command), (tags))
+LONG __System(__reg("a6") void *, __reg("d1") CONST_STRPTR command, __reg("d2") CONST struct TagItem * tags)="\tjsr\t-606(a6)";
+#define System(command, tags) __System(DOSBase, (command), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
 LONG __SystemTags(__reg("a6") void *, __reg("d1") CONST_STRPTR command, ULONG tags, ...)="\tmove.l\td2,-(a7)\n\tmove.l\ta7,d2\n\taddq.l\t#4,d2\n\tjsr\t-606(a6)\n\tmove.l\t(a7)+,d2";
@@ -414,7 +417,8 @@ BOOL __InternalUnLoadSeg(__reg("a6") void *, __reg("d1") BPTR seglist, __reg("a1
 BPTR __NewLoadSeg(__reg("a6") void *, __reg("d1") CONST_STRPTR file, __reg("d2") CONST struct TagItem * tags)="\tjsr\t-768(a6)";
 #define NewLoadSeg(file, tags) __NewLoadSeg(DOSBase, (file), (tags))
 
-#define NewLoadSegTagList(file, tags) __NewLoadSeg(DOSBase, (file), (tags))
+BPTR __NewLoadSegTagList(__reg("a6") void *, __reg("d1") CONST_STRPTR file, __reg("d2") CONST struct TagItem * tags)="\tjsr\t-768(a6)";
+#define NewLoadSegTagList(file, tags) __NewLoadSegTagList(DOSBase, (file), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
 BPTR __NewLoadSegTags(__reg("a6") void *, __reg("d1") CONST_STRPTR file, ULONG tags, ...)="\tmove.l\td2,-(a7)\n\tmove.l\ta7,d2\n\taddq.l\t#4,d2\n\tjsr\t-768(a6)\n\tmove.l\t(a7)+,d2";
@@ -454,11 +458,11 @@ LONG __MatchNext(__reg("a6") void *, __reg("d1") struct AnchorPath * anchor)="\t
 VOID __MatchEnd(__reg("a6") void *, __reg("d1") struct AnchorPath * anchor)="\tjsr\t-834(a6)";
 #define MatchEnd(anchor) __MatchEnd(DOSBase, (anchor))
 
-LONG __ParsePattern(__reg("a6") void *, __reg("d1") CONST_STRPTR pat, __reg("d2") STRPTR buf, __reg("d3") LONG buflen)="\tjsr\t-840(a6)";
-#define ParsePattern(pat, buf, buflen) __ParsePattern(DOSBase, (pat), (buf), (buflen))
+LONG __ParsePattern(__reg("a6") void *, __reg("d1") CONST_STRPTR pat, __reg("d2") UBYTE * patbuf, __reg("d3") LONG patbuflen)="\tjsr\t-840(a6)";
+#define ParsePattern(pat, patbuf, patbuflen) __ParsePattern(DOSBase, (pat), (patbuf), (patbuflen))
 
-BOOL __MatchPattern(__reg("a6") void *, __reg("d1") CONST_STRPTR pat, __reg("d2") STRPTR str)="\tjsr\t-846(a6)";
-#define MatchPattern(pat, str) __MatchPattern(DOSBase, (pat), (str))
+BOOL __MatchPattern(__reg("a6") void *, __reg("d1") CONST UBYTE * patbuf, __reg("d2") CONST_STRPTR str)="\tjsr\t-846(a6)";
+#define MatchPattern(patbuf, str) __MatchPattern(DOSBase, (patbuf), (str))
 
 VOID __FreeArgs(__reg("a6") void *, __reg("d1") struct RDArgs * args)="\tjsr\t-858(a6)";
 #define FreeArgs(args) __FreeArgs(DOSBase, (args))
@@ -502,7 +506,7 @@ LONG __WriteChars(__reg("a6") void *, __reg("d1") CONST_STRPTR buf, __reg("d2") 
 LONG __PutStr(__reg("a6") void *, __reg("d1") CONST_STRPTR str)="\tjsr\t-948(a6)";
 #define PutStr(str) __PutStr(DOSBase, (str))
 
-LONG __VPrintf(__reg("a6") void *, __reg("d1") CONST_STRPTR format, __reg("d2") CONST APTR argarray)="\tjsr\t-954(a6)";
+LONG __VPrintf(__reg("a6") void *, __reg("d1") CONST_STRPTR format, __reg("d2") CONST_APTR argarray)="\tjsr\t-954(a6)";
 #define VPrintf(format, argarray) __VPrintf(DOSBase, (format), (argarray))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
@@ -510,11 +514,11 @@ LONG __Printf(__reg("a6") void *, __reg("d1") CONST_STRPTR format, ...)="\tmove.
 #define Printf(...) __Printf(DOSBase, __VA_ARGS__)
 #endif
 
-LONG __ParsePatternNoCase(__reg("a6") void *, __reg("d1") CONST_STRPTR pat, __reg("d2") UBYTE * buf, __reg("d3") LONG buflen)="\tjsr\t-966(a6)";
-#define ParsePatternNoCase(pat, buf, buflen) __ParsePatternNoCase(DOSBase, (pat), (buf), (buflen))
+LONG __ParsePatternNoCase(__reg("a6") void *, __reg("d1") CONST_STRPTR pat, __reg("d2") UBYTE * patbuf, __reg("d3") LONG patbuflen)="\tjsr\t-966(a6)";
+#define ParsePatternNoCase(pat, patbuf, patbuflen) __ParsePatternNoCase(DOSBase, (pat), (patbuf), (patbuflen))
 
-BOOL __MatchPatternNoCase(__reg("a6") void *, __reg("d1") CONST_STRPTR pat, __reg("d2") STRPTR str)="\tjsr\t-972(a6)";
-#define MatchPatternNoCase(pat, str) __MatchPatternNoCase(DOSBase, (pat), (str))
+BOOL __MatchPatternNoCase(__reg("a6") void *, __reg("d1") CONST UBYTE * patbuf, __reg("d2") CONST_STRPTR str)="\tjsr\t-972(a6)";
+#define MatchPatternNoCase(patbuf, str) __MatchPatternNoCase(DOSBase, (patbuf), (str))
 
 BOOL __SameDevice(__reg("a6") void *, __reg("d1") BPTR lock1, __reg("d2") BPTR lock2)="\tjsr\t-984(a6)";
 #define SameDevice(lock1, lock2) __SameDevice(DOSBase, (lock1), (lock2))
@@ -524,5 +528,31 @@ VOID __ExAllEnd(__reg("a6") void *, __reg("d1") BPTR lock, __reg("d2") struct Ex
 
 BOOL __SetOwner(__reg("a6") void *, __reg("d1") CONST_STRPTR name, __reg("d2") LONG owner_info)="\tjsr\t-996(a6)";
 #define SetOwner(name, owner_info) __SetOwner(DOSBase, (name), (owner_info))
+
+LONG __VolumeRequestHook(__reg("a6") void *, __reg("d1") CONST_STRPTR vol)="\tjsr\t-1014(a6)";
+#define VolumeRequestHook(vol) __VolumeRequestHook(DOSBase, (vol))
+
+BPTR __GetCurrentDir(__reg("a6") void *)="\tjsr\t-1026(a6)";
+#define GetCurrentDir() __GetCurrentDir(DOSBase)
+
+LONG __PutErrStr(__reg("a6") void *, __reg("d1") CONST_STRPTR str)="\tjsr\t-1128(a6)";
+#define PutErrStr(str) __PutErrStr(DOSBase, (str))
+
+LONG __ErrorOutput(__reg("a6") void *)="\tjsr\t-1134(a6)";
+#define ErrorOutput() __ErrorOutput(DOSBase)
+
+LONG __SelectError(__reg("a6") void *, __reg("d1") BPTR fh)="\tjsr\t-1140(a6)";
+#define SelectError(fh) __SelectError(DOSBase, (fh))
+
+APTR __DoShellMethodTagList(__reg("a6") void *, __reg("d0") ULONG method, __reg("a0") CONST struct TagItem * tags)="\tjsr\t-1152(a6)";
+#define DoShellMethodTagList(method, tags) __DoShellMethodTagList(DOSBase, (method), (tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+APTR __DoShellMethod(__reg("a6") void *, __reg("d0") ULONG method, ULONG tags, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-1152(a6)\n\tmovea.l\t(a7)+,a0";
+#define DoShellMethod(method, ...) __DoShellMethod(DOSBase, (method), __VA_ARGS__)
+#endif
+
+LONG __ScanStackToken(__reg("a6") void *, __reg("d1") BPTR seg, __reg("d2") LONG defaultstack)="\tjsr\t-1158(a6)";
+#define ScanStackToken(seg, defaultstack) __ScanStackToken(DOSBase, (seg), (defaultstack))
 
 #endif /*  _VBCCINLINE_DOS_H  */

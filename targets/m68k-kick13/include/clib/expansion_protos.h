@@ -3,11 +3,11 @@
 
 
 /*
-**	$VER: expansion_protos.h 34.106 (03.10.2019)
+**	$VER: expansion_protos.h 34.106 (21.05.2022)
 **
-**	C prototypes. For use with 32 bit integers only.
+**	C prototypes.
 **
-**	Copyright © 2019 
+**	Copyright © 2022 
 **	All Rights Reserved
 */
 

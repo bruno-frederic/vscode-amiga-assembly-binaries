@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_PPC_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/ppc_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *PPCLibBase;
 #include <inline/ppc.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/ppc_protos.h>
+#endif
 #else
 #include <pragma/ppc_lib.h>
 #endif

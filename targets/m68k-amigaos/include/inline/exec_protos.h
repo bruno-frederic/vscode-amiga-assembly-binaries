@@ -11,14 +11,14 @@ ULONG __Supervisor(__reg("a6") void *, __reg("a5") ULONG (*userFunction)())="\tj
 VOID __InitCode(__reg("a6") void *, __reg("d0") ULONG startClass, __reg("d1") ULONG version)="\tjsr\t-72(a6)";
 #define InitCode(startClass, version) __InitCode(SysBase, (startClass), (version))
 
-VOID __InitStruct(__reg("a6") void *, __reg("a1") CONST APTR initTable, __reg("a2") APTR memory, __reg("d0") ULONG size)="\tjsr\t-78(a6)";
+VOID __InitStruct(__reg("a6") void *, __reg("a1") CONST_APTR initTable, __reg("a2") APTR memory, __reg("d0") ULONG size)="\tjsr\t-78(a6)";
 #define InitStruct(initTable, memory, size) __InitStruct(SysBase, (initTable), (memory), (size))
 
-struct Library * __MakeLibrary(__reg("a6") void *, __reg("a0") CONST APTR funcInit, __reg("a1") CONST APTR structInit, __reg("a2") ULONG (*libInit)(), __reg("d0") ULONG dataSize, __reg("d1") ULONG segList)="\tjsr\t-84(a6)";
+struct Library * __MakeLibrary(__reg("a6") void *, __reg("a0") CONST_APTR funcInit, __reg("a1") CONST_APTR structInit, __reg("a2") ULONG (*libInit)(), __reg("d0") ULONG dataSize, __reg("d1") ULONG segList)="\tjsr\t-84(a6)";
 #define MakeLibrary(funcInit, structInit, libInit, dataSize, segList) __MakeLibrary(SysBase, (funcInit), (structInit), (libInit), (dataSize), (segList))
 
-VOID __MakeFunctions(__reg("a6") void *, __reg("a0") APTR target, __reg("a1") CONST APTR functionArray, __reg("a2") CONST APTR funcDispBase)="\tjsr\t-90(a6)";
-#define MakeFunctions(target, functionArray, funcDispBase) __MakeFunctions(SysBase, (target), (functionArray), (funcDispBase))
+VOID __MakeFunctions(__reg("a6") void *, __reg("a0") APTR target, __reg("a1") CONST_APTR functionArray, __reg("a2") void * funcDispBase)="\tjsr\t-90(a6)";
+#define MakeFunctions(target, functionArray, funcDispBase) __MakeFunctions(SysBase, (target), (functionArray), (void *)(funcDispBase))
 
 struct Resident * __FindResident(__reg("a6") void *, __reg("a1") CONST_STRPTR name)="\tjsr\t-96(a6)";
 #define FindResident(name) __FindResident(SysBase, (name))
@@ -53,7 +53,7 @@ APTR __SuperState(__reg("a6") void *)="\tjsr\t-150(a6)";
 VOID __UserState(__reg("a6") void *, __reg("d0") APTR sysStack)="\tjsr\t-156(a6)";
 #define UserState(sysStack) __UserState(SysBase, (sysStack))
 
-struct Interrupt * __SetIntVector(__reg("a6") void *, __reg("d0") LONG intNumber, __reg("a1") CONST struct Interrupt * interrupt)="\tjsr\t-162(a6)";
+struct Interrupt * __SetIntVector(__reg("a6") void *, __reg("d0") LONG intNumber, __reg("a1") struct Interrupt * interrupt)="\tjsr\t-162(a6)";
 #define SetIntVector(intNumber, interrupt) __SetIntVector(SysBase, (intNumber), (interrupt))
 
 VOID __AddIntServer(__reg("a6") void *, __reg("d0") LONG intNumber, __reg("a1") struct Interrupt * interrupt)="\tjsr\t-168(a6)";
@@ -62,7 +62,7 @@ VOID __AddIntServer(__reg("a6") void *, __reg("d0") LONG intNumber, __reg("a1") 
 VOID __RemIntServer(__reg("a6") void *, __reg("d0") LONG intNumber, __reg("a1") struct Interrupt * interrupt)="\tjsr\t-174(a6)";
 #define RemIntServer(intNumber, interrupt) __RemIntServer(SysBase, (intNumber), (interrupt))
 
-VOID __Cause(__reg("a6") void *, __reg("a1") struct Interrupt * interrupt)="\tjsr\t-180(a6)";
+VOID __Cause(__reg("a6") void *, __reg("a1") CONST struct Interrupt * interrupt)="\tjsr\t-180(a6)";
 #define Cause(interrupt) __Cause(SysBase, (interrupt))
 
 APTR __Allocate(__reg("a6") void *, __reg("a0") struct MemHeader * freeList, __reg("d0") ULONG byteSize)="\tjsr\t-186(a6)";
@@ -83,7 +83,7 @@ VOID __FreeMem(__reg("a6") void *, __reg("a1") APTR memoryBlock, __reg("d0") ULO
 ULONG __AvailMem(__reg("a6") void *, __reg("d1") ULONG requirements)="\tjsr\t-216(a6)";
 #define AvailMem(requirements) __AvailMem(SysBase, (requirements))
 
-struct MemList * __AllocEntry(__reg("a6") void *, __reg("a0") struct MemList * entry)="\tjsr\t-222(a6)";
+struct MemList * __AllocEntry(__reg("a6") void *, __reg("a0") CONST struct MemList * entry)="\tjsr\t-222(a6)";
 #define AllocEntry(entry) __AllocEntry(SysBase, (entry))
 
 VOID __FreeEntry(__reg("a6") void *, __reg("a0") struct MemList * entry)="\tjsr\t-228(a6)";
@@ -92,20 +92,38 @@ VOID __FreeEntry(__reg("a6") void *, __reg("a0") struct MemList * entry)="\tjsr\
 VOID __Insert(__reg("a6") void *, __reg("a0") struct List * list, __reg("a1") struct Node * node, __reg("a2") struct Node * pred)="\tjsr\t-234(a6)";
 #define Insert(list, node, pred) __Insert(SysBase, (list), (node), (pred))
 
+VOID __InsertMinNode(__reg("a6") void *, __reg("a0") struct MinList * minlist, __reg("a1") struct MinNode * minnode, __reg("a2") struct MinNode * minpred)="\tjsr\t-234(a6)";
+#define InsertMinNode(minlist, minnode, minpred) __InsertMinNode(SysBase, (minlist), (minnode), (minpred))
+
 VOID __AddHead(__reg("a6") void *, __reg("a0") struct List * list, __reg("a1") struct Node * node)="\tjsr\t-240(a6)";
 #define AddHead(list, node) __AddHead(SysBase, (list), (node))
+
+VOID __AddHeadMinList(__reg("a6") void *, __reg("a0") struct MinList * minlist, __reg("a1") struct MinNode * minnode)="\tjsr\t-240(a6)";
+#define AddHeadMinList(minlist, minnode) __AddHeadMinList(SysBase, (minlist), (minnode))
 
 VOID __AddTail(__reg("a6") void *, __reg("a0") struct List * list, __reg("a1") struct Node * node)="\tjsr\t-246(a6)";
 #define AddTail(list, node) __AddTail(SysBase, (list), (node))
 
+VOID __AddTailMinList(__reg("a6") void *, __reg("a0") struct MinList * minlist, __reg("a1") struct MinNode * minnode)="\tjsr\t-246(a6)";
+#define AddTailMinList(minlist, minnode) __AddTailMinList(SysBase, (minlist), (minnode))
+
 VOID __Remove(__reg("a6") void *, __reg("a1") struct Node * node)="\tjsr\t-252(a6)";
 #define Remove(node) __Remove(SysBase, (node))
+
+VOID __RemoveMinNode(__reg("a6") void *, __reg("a1") struct MinNode * minnode)="\tjsr\t-252(a6)";
+#define RemoveMinNode(minnode) __RemoveMinNode(SysBase, (minnode))
 
 struct Node * __RemHead(__reg("a6") void *, __reg("a0") struct List * list)="\tjsr\t-258(a6)";
 #define RemHead(list) __RemHead(SysBase, (list))
 
+struct MinNode * __RemHeadMinList(__reg("a6") void *, __reg("a0") struct MinList * minlist)="\tjsr\t-258(a6)";
+#define RemHeadMinList(minlist) __RemHeadMinList(SysBase, (minlist))
+
 struct Node * __RemTail(__reg("a6") void *, __reg("a0") struct List * list)="\tjsr\t-264(a6)";
 #define RemTail(list) __RemTail(SysBase, (list))
+
+struct MinNode * __RemTailMinList(__reg("a6") void *, __reg("a0") struct MinList * minlist)="\tjsr\t-264(a6)";
+#define RemTailMinList(minlist) __RemTailMinList(SysBase, (minlist))
 
 VOID __Enqueue(__reg("a6") void *, __reg("a0") struct List * list, __reg("a1") struct Node * node)="\tjsr\t-270(a6)";
 #define Enqueue(list, node) __Enqueue(SysBase, (list), (node))
@@ -113,7 +131,7 @@ VOID __Enqueue(__reg("a6") void *, __reg("a0") struct List * list, __reg("a1") s
 struct Node * __FindName(__reg("a6") void *, __reg("a0") struct List * list, __reg("a1") CONST_STRPTR name)="\tjsr\t-276(a6)";
 #define FindName(list, name) __FindName(SysBase, (list), (name))
 
-APTR __AddTask(__reg("a6") void *, __reg("a1") struct Task * task, __reg("a2") CONST APTR initPC, __reg("a3") CONST APTR finalPC)="\tjsr\t-282(a6)";
+APTR __AddTask(__reg("a6") void *, __reg("a1") struct Task * task, __reg("a2") APTR initPC, __reg("a3") APTR finalPC)="\tjsr\t-282(a6)";
 #define AddTask(task, initPC, finalPC) __AddTask(SysBase, (task), (initPC), (finalPC))
 
 VOID __RemTask(__reg("a6") void *, __reg("a1") struct Task * task)="\tjsr\t-288(a6)";
@@ -206,7 +224,7 @@ BYTE __DoIO(__reg("a6") void *, __reg("a1") struct IORequest * ioRequest)="\tjsr
 VOID __SendIO(__reg("a6") void *, __reg("a1") struct IORequest * ioRequest)="\tjsr\t-462(a6)";
 #define SendIO(ioRequest) __SendIO(SysBase, (ioRequest))
 
-struct IORequest * __CheckIO(__reg("a6") void *, __reg("a1") struct IORequest * ioRequest)="\tjsr\t-468(a6)";
+struct IORequest * __CheckIO(__reg("a6") void *, __reg("a1") CONST struct IORequest * ioRequest)="\tjsr\t-468(a6)";
 #define CheckIO(ioRequest) __CheckIO(SysBase, (ioRequest))
 
 BYTE __WaitIO(__reg("a6") void *, __reg("a1") struct IORequest * ioRequest)="\tjsr\t-474(a6)";
@@ -224,13 +242,13 @@ VOID __RemResource(__reg("a6") void *, __reg("a1") APTR resource)="\tjsr\t-492(a
 APTR __OpenResource(__reg("a6") void *, __reg("a1") CONST_STRPTR resName)="\tjsr\t-498(a6)";
 #define OpenResource(resName) __OpenResource(SysBase, (resName))
 
-APTR __RawDoFmt(__reg("a6") void *, __reg("a0") CONST_STRPTR formatString, __reg("a1") CONST APTR dataStream, __reg("a2") VOID (*putChProc)(), __reg("a3") APTR putChData)="\tjsr\t-522(a6)";
+APTR __RawDoFmt(__reg("a6") void *, __reg("a0") CONST_STRPTR formatString, __reg("a1") APTR dataStream, __reg("a2") VOID (*putChProc)(), __reg("a3") APTR putChData)="\tjsr\t-522(a6)";
 #define RawDoFmt(formatString, dataStream, putChProc, putChData) __RawDoFmt(SysBase, (formatString), (dataStream), (putChProc), (putChData))
 
 ULONG __GetCC(__reg("a6") void *)="\tjsr\t-528(a6)";
 #define GetCC() __GetCC(SysBase)
 
-ULONG __TypeOfMem(__reg("a6") void *, __reg("a1") CONST APTR address)="\tjsr\t-534(a6)";
+ULONG __TypeOfMem(__reg("a6") void *, __reg("a1") CONST_APTR address)="\tjsr\t-534(a6)";
 #define TypeOfMem(address) __TypeOfMem(SysBase, (address))
 
 ULONG __Procure(__reg("a6") void *, __reg("a0") struct SignalSemaphore * sigSem, __reg("a1") struct SemaphoreMessage * bidMsg)="\tjsr\t-540(a6)";
@@ -260,7 +278,7 @@ VOID __ObtainSemaphoreList(__reg("a6") void *, __reg("a0") struct List * sigSem)
 VOID __ReleaseSemaphoreList(__reg("a6") void *, __reg("a0") struct List * sigSem)="\tjsr\t-588(a6)";
 #define ReleaseSemaphoreList(sigSem) __ReleaseSemaphoreList(SysBase, (sigSem))
 
-struct SignalSemaphore * __FindSemaphore(__reg("a6") void *, __reg("a1") STRPTR name)="\tjsr\t-594(a6)";
+struct SignalSemaphore * __FindSemaphore(__reg("a6") void *, __reg("a1") CONST_STRPTR name)="\tjsr\t-594(a6)";
 #define FindSemaphore(name) __FindSemaphore(SysBase, (name))
 
 VOID __AddSemaphore(__reg("a6") void *, __reg("a1") struct SignalSemaphore * sigSem)="\tjsr\t-600(a6)";
@@ -272,13 +290,13 @@ VOID __RemSemaphore(__reg("a6") void *, __reg("a1") struct SignalSemaphore * sig
 ULONG __SumKickData(__reg("a6") void *)="\tjsr\t-612(a6)";
 #define SumKickData() __SumKickData(SysBase)
 
-VOID __AddMemList(__reg("a6") void *, __reg("d0") ULONG size, __reg("d1") ULONG attributes, __reg("d2") LONG pri, __reg("a0") APTR base, __reg("a1") CONST_STRPTR name)="\tjsr\t-618(a6)";
+VOID __AddMemList(__reg("a6") void *, __reg("d0") ULONG size, __reg("d1") ULONG attributes, __reg("d2") LONG pri, __reg("a0") APTR base, __reg("a1") STRPTR name)="\tjsr\t-618(a6)";
 #define AddMemList(size, attributes, pri, base, name) __AddMemList(SysBase, (size), (attributes), (pri), (base), (name))
 
-VOID __CopyMem(__reg("a6") void *, __reg("a0") CONST APTR source, __reg("a1") APTR dest, __reg("d0") ULONG size)="\tjsr\t-624(a6)";
+VOID __CopyMem(__reg("a6") void *, __reg("a0") CONST_APTR source, __reg("a1") APTR dest, __reg("d0") ULONG size)="\tjsr\t-624(a6)";
 #define CopyMem(source, dest, size) __CopyMem(SysBase, (source), (dest), (size))
 
-VOID __CopyMemQuick(__reg("a6") void *, __reg("a0") CONST APTR source, __reg("a1") APTR dest, __reg("d0") ULONG size)="\tjsr\t-630(a6)";
+VOID __CopyMemQuick(__reg("a6") void *, __reg("a0") CONST_APTR source, __reg("a1") APTR dest, __reg("d0") ULONG size)="\tjsr\t-630(a6)";
 #define CopyMemQuick(source, dest, size) __CopyMemQuick(SysBase, (source), (dest), (size))
 
 VOID __CacheClearU(__reg("a6") void *)="\tjsr\t-636(a6)";
@@ -290,7 +308,7 @@ VOID __CacheClearE(__reg("a6") void *, __reg("a0") APTR address, __reg("d0") ULO
 ULONG __CacheControl(__reg("a6") void *, __reg("d0") ULONG cacheBits, __reg("d1") ULONG cacheMask)="\tjsr\t-648(a6)";
 #define CacheControl(cacheBits, cacheMask) __CacheControl(SysBase, (cacheBits), (cacheMask))
 
-APTR __CreateIORequest(__reg("a6") void *, __reg("a0") CONST struct MsgPort * port, __reg("d0") ULONG size)="\tjsr\t-654(a6)";
+APTR __CreateIORequest(__reg("a6") void *, __reg("a0") struct MsgPort * port, __reg("d0") ULONG size)="\tjsr\t-654(a6)";
 #define CreateIORequest(port, size) __CreateIORequest(SysBase, (port), (size))
 
 VOID __DeleteIORequest(__reg("a6") void *, __reg("a0") APTR iorequest)="\tjsr\t-660(a6)";
@@ -332,10 +350,10 @@ VOID __ColdReboot(__reg("a6") void *)="\tjsr\t-726(a6)";
 VOID __StackSwap(__reg("a6") void *, __reg("a0") struct StackSwapStruct * newStack)="\tjsr\t-732(a6)";
 #define StackSwap(newStack) __StackSwap(SysBase, (newStack))
 
-APTR __CachePreDMA(__reg("a6") void *, __reg("a0") CONST APTR address, __reg("a1") ULONG * length, __reg("d0") ULONG flags)="\tjsr\t-762(a6)";
+APTR __CachePreDMA(__reg("a6") void *, __reg("a0") CONST_APTR address, __reg("a1") ULONG * length, __reg("d0") ULONG flags)="\tjsr\t-762(a6)";
 #define CachePreDMA(address, length, flags) __CachePreDMA(SysBase, (address), (length), (flags))
 
-VOID __CachePostDMA(__reg("a6") void *, __reg("a0") CONST APTR address, __reg("a1") ULONG * length, __reg("d0") ULONG flags)="\tjsr\t-768(a6)";
+VOID __CachePostDMA(__reg("a6") void *, __reg("a0") CONST_APTR address, __reg("a1") ULONG * length, __reg("d0") ULONG flags)="\tjsr\t-768(a6)";
 #define CachePostDMA(address, length, flags) __CachePostDMA(SysBase, (address), (length), (flags))
 
 VOID __AddMemHandler(__reg("a6") void *, __reg("a1") struct Interrupt * memhand)="\tjsr\t-774(a6)";
@@ -349,35 +367,5 @@ ULONG __ObtainQuickVector(__reg("a6") void *, __reg("a0") APTR interruptCode)="\
 
 VOID __NewMinList(__reg("a6") void *, __reg("a0") struct MinList * minlist)="\tjsr\t-828(a6)";
 #define NewMinList(minlist) __NewMinList(SysBase, (minlist))
-
-struct AVLNode * __AVL_AddNode(__reg("a6") void *, __reg("a0") struct AVLNode ** root, __reg("a1") struct AVLNode * node, __reg("a2") APTR func)="\tjsr\t-852(a6)";
-#define AVL_AddNode(root, node, func) __AVL_AddNode(SysBase, (root), (node), (func))
-
-struct AVLNode * __AVL_RemNodeByAddress(__reg("a6") void *, __reg("a0") struct AVLNode ** root, __reg("a1") struct AVLNode * node)="\tjsr\t-858(a6)";
-#define AVL_RemNodeByAddress(root, node) __AVL_RemNodeByAddress(SysBase, (root), (node))
-
-struct AVLNode * __AVL_RemNodeByKey(__reg("a6") void *, __reg("a0") struct AVLNode ** root, __reg("a1") AVLKey key, __reg("a2") APTR func)="\tjsr\t-864(a6)";
-#define AVL_RemNodeByKey(root, key, func) __AVL_RemNodeByKey(SysBase, (root), (key), (func))
-
-struct AVLNode * __AVL_FindNode(__reg("a6") void *, __reg("a0") CONST struct AVLNode * root, __reg("a1") AVLKey key, __reg("a2") APTR func)="\tjsr\t-870(a6)";
-#define AVL_FindNode(root, key, func) __AVL_FindNode(SysBase, (root), (key), (func))
-
-struct AVLNode * __AVL_FindPrevNodeByAddress(__reg("a6") void *, __reg("a0") CONST struct AVLNode * node)="\tjsr\t-876(a6)";
-#define AVL_FindPrevNodeByAddress(node) __AVL_FindPrevNodeByAddress(SysBase, (node))
-
-struct AVLNode * __AVL_FindPrevNodeByKey(__reg("a6") void *, __reg("a0") CONST struct AVLNode * root, __reg("a1") AVLKey key, __reg("a2") APTR func)="\tjsr\t-882(a6)";
-#define AVL_FindPrevNodeByKey(root, key, func) __AVL_FindPrevNodeByKey(SysBase, (root), (key), (func))
-
-struct AVLNode * __AVL_FindNextNodeByAddress(__reg("a6") void *, __reg("a0") CONST struct AVLNode * node)="\tjsr\t-888(a6)";
-#define AVL_FindNextNodeByAddress(node) __AVL_FindNextNodeByAddress(SysBase, (node))
-
-struct AVLNode * __AVL_FindNextNodeByKey(__reg("a6") void *, __reg("a0") CONST struct AVLNode * root, __reg("a1") AVLKey key, __reg("a2") APTR func)="\tjsr\t-894(a6)";
-#define AVL_FindNextNodeByKey(root, key, func) __AVL_FindNextNodeByKey(SysBase, (root), (key), (func))
-
-struct AVLNode * __AVL_FindFirstNode(__reg("a6") void *, __reg("a0") CONST struct AVLNode * root)="\tjsr\t-900(a6)";
-#define AVL_FindFirstNode(root) __AVL_FindFirstNode(SysBase, (root))
-
-struct AVLNode * __AVL_FindLastNode(__reg("a6") void *, __reg("a0") CONST struct AVLNode * root)="\tjsr\t-906(a6)";
-#define AVL_FindLastNode(root) __AVL_FindLastNode(SysBase, (root))
 
 #endif /*  _VBCCINLINE_EXEC_H  */

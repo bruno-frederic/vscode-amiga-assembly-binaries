@@ -35,4 +35,10 @@ VOID __GetChooserNodeAttrs(__reg("a6") void *, __reg("a0") struct Node * node, .
 #define GetChooserNodeAttrs(...) __GetChooserNodeAttrs(ChooserBase, __VA_ARGS__)
 #endif
 
+ULONG __ShowChooser(__reg("a6") void *, __reg("a0") Object * o, __reg("a1") struct Window * w, __reg("d0") ULONG xpos, __reg("d1") ULONG ypos)="\tjsr\t-60(a6)";
+#define ShowChooser(o, w, xpos, ypos) __ShowChooser(ChooserBase, (o), (w), (xpos), (ypos))
+
+VOID __HideChooser(__reg("a6") void *, __reg("a0") Object * o, __reg("a1") struct Window * w)="\tjsr\t-66(a6)";
+#define HideChooser(o, w) __HideChooser(ChooserBase, (o), (w))
+
 #endif /*  _VBCCINLINE_CHOOSER_H  */

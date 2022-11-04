@@ -38,12 +38,16 @@ APTR __rtFileRequest(__reg("a6") void *, __reg("a1") struct rtFileRequester * fi
 void __rtFreeFileList(__reg("a6") void *, __reg("a0") struct rtFileList * filelist)="\tjsr\t-60(a6)";
 #define rtFreeFileList(filelist) __rtFreeFileList(ReqToolsBase, (filelist))
 
+#if !defined(__SMALL_DATA__)
 ULONG __rtEZRequestA(__reg("a6") void *, __reg("a1") char * bodyfmt, __reg("a2") char * gadfmt, __reg("a3") struct rtReqInfo * reqinfo, __reg("a4") APTR argarray, __reg("a0") struct TagItem * taglist)="\tjsr\t-66(a6)";
 #define rtEZRequestA(bodyfmt, gadfmt, reqinfo, argarray, taglist) __rtEZRequestA(ReqToolsBase, (bodyfmt), (gadfmt), (reqinfo), (argarray), (taglist))
+#endif
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+#if !defined(__SMALL_DATA__)
 ULONG __rtEZRequestTags(__reg("a6") void *, __reg("a1") char * bodyfmt, __reg("a2") char * gadfmt, __reg("a3") struct rtReqInfo * reqinfo, __reg("a4") APTR argarray, Tag taglist, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-66(a6)\n\tmovea.l\t(a7)+,a0";
 #define rtEZRequestTags(bodyfmt, gadfmt, reqinfo, argarray, ...) __rtEZRequestTags(ReqToolsBase, (bodyfmt), (gadfmt), (reqinfo), (argarray), __VA_ARGS__)
+#endif
 #endif
 
 ULONG __rtGetStringA(__reg("a6") void *, __reg("a1") UBYTE * buffer, __reg("d0") ULONG maxchars, __reg("a2") char * title, __reg("a3") struct rtReqInfo * reqinfo, __reg("a0") struct TagItem * taglist)="\tjsr\t-72(a6)";

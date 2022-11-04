@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_CGXSYSTEM_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/cgxsystem_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *CGXSystemBase;
 #include <inline/cgxsystem.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/cgxsystem_protos.h>
+#endif
 #else
 #include <pragma/cgxsystem_lib.h>
 #endif

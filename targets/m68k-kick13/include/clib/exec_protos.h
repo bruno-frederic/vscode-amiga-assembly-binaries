@@ -3,11 +3,11 @@
 
 
 /*
-**	$VER: exec_protos.h 34.106 (03.10.2019)
+**	$VER: exec_protos.h 34.106 (21.05.2022)
 **
-**	C prototypes. For use with 32 bit integers only.
+**	C prototypes.
 **
-**	Copyright © 2019 
+**	Copyright © 2022 
 **	All Rights Reserved
 */
 
@@ -41,7 +41,7 @@ struct Library * MakeLibrary(const void * funcInit, const void * structInit,
 VOID MakeFunctions(void * target, const void * functionArray, const void * funcDispBase);
 struct Resident * FindResident(const STRPTR name);
 void * InitResident(const struct Resident * resident, ULONG segList);
-VOID Alert(ULONG alertNum);
+VOID Alert(ULONG alertNum, ULONG * parameter);
 VOID Debug(ULONG flags);
 VOID Disable(void);
 VOID Enable(void);

@@ -5,7 +5,7 @@
 #include <exec/types.h>
 #endif
 
-struct IClass * __LISTBROWSER_GetClass(__reg("a6") void *)="\tjsr\t-30(a6)";
+Class * __LISTBROWSER_GetClass(__reg("a6") void *)="\tjsr\t-30(a6)";
 #define LISTBROWSER_GetClass() __LISTBROWSER_GetClass(ListBrowserBase)
 
 struct Node * __AllocListBrowserNodeA(__reg("a6") void *, __reg("d0") ULONG columns, __reg("a0") struct TagItem * tags)="\tjsr\t-36(a6)";

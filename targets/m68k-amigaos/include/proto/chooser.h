@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_CHOOSER_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/chooser_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *ChooserBase;
 #include <inline/chooser.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/chooser_protos.h>
+#endif
 #else
 #include <pragma/chooser_lib.h>
 #endif

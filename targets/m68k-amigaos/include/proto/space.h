@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_SPACE_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/space_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *SpaceBase;
 #include <inline/space.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/space_protos.h>
+#endif
 #else
 #include <pragma/space_lib.h>
 #endif

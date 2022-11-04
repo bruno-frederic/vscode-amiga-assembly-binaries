@@ -11,8 +11,8 @@ CxObj * __CreateCxObj(__reg("a6") void *, __reg("d0") ULONG type, __reg("a0") vo
 CxObj * __CxBroker(__reg("a6") void *, __reg("a0") CONST struct NewBroker * nb, __reg("d0") LONG * error)="\tjsr\t-36(a6)";
 #define CxBroker(nb, error) __CxBroker(CxBase, (nb), (error))
 
-LONG __ActivateCxObj(__reg("a6") void *, __reg("a0") CxObj * co, __reg("d0") LONG doIt)="\tjsr\t-42(a6)";
-#define ActivateCxObj(co, doIt) __ActivateCxObj(CxBase, (co), (doIt))
+LONG __ActivateCxObj(__reg("a6") void *, __reg("a0") CxObj * co, __reg("d0") LONG flag)="\tjsr\t-42(a6)";
+#define ActivateCxObj(co, flag) __ActivateCxObj(CxBase, (co), (flag))
 
 VOID __DeleteCxObj(__reg("a6") void *, __reg("a0") CxObj * co)="\tjsr\t-48(a6)";
 #define DeleteCxObj(co) __DeleteCxObj(CxBase, (co))

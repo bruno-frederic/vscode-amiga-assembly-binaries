@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_DOS_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/dos_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct DosLibrary *DOSBase;
 #include <inline/dos.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/dos_protos.h>
+#endif
 #else
 #include <pragma/dos_lib.h>
 #endif

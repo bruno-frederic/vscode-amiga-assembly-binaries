@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_LABEL_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/label_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *LabelBase;
 #include <inline/label.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/label_protos.h>
+#endif
 #else
 #include <pragma/label_lib.h>
 #endif

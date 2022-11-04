@@ -38,10 +38,10 @@ VOID __FreeConfigDev(__reg("a6") void *, __reg("a0") struct ConfigDev * configDe
 VOID __FreeExpansionMem(__reg("a6") void *, __reg("d0") ULONG startSlot, __reg("d1") ULONG numSlots)="\tjsr\t-90(a6)";
 #define FreeExpansionMem(startSlot, numSlots) __FreeExpansionMem(ExpansionBase, (startSlot), (numSlots))
 
-UBYTE __ReadExpansionByte(__reg("a6") void *, __reg("a0") CONST APTR board, __reg("d0") ULONG offset)="\tjsr\t-96(a6)";
+UBYTE __ReadExpansionByte(__reg("a6") void *, __reg("a0") CONST_APTR board, __reg("d0") ULONG offset)="\tjsr\t-96(a6)";
 #define ReadExpansionByte(board, offset) __ReadExpansionByte(ExpansionBase, (board), (offset))
 
-VOID __ReadExpansionRom(__reg("a6") void *, __reg("a0") CONST APTR board, __reg("a1") struct ConfigDev * configDev)="\tjsr\t-102(a6)";
+VOID __ReadExpansionRom(__reg("a6") void *, __reg("a0") CONST_APTR board, __reg("a1") struct ConfigDev * configDev)="\tjsr\t-102(a6)";
 #define ReadExpansionRom(board, configDev) __ReadExpansionRom(ExpansionBase, (board), (configDev))
 
 VOID __RemConfigDev(__reg("a6") void *, __reg("a0") struct ConfigDev * configDev)="\tjsr\t-108(a6)";
@@ -62,7 +62,7 @@ VOID __SetCurrentBinding(__reg("a6") void *, __reg("a0") struct CurrentBinding *
 ULONG __GetCurrentBinding(__reg("a6") void *, __reg("a0") CONST struct CurrentBinding * currentBinding, __reg("d0") ULONG bindingSize)="\tjsr\t-138(a6)";
 #define GetCurrentBinding(currentBinding, bindingSize) __GetCurrentBinding(ExpansionBase, (currentBinding), (bindingSize))
 
-struct DeviceNode * __MakeDosNode(__reg("a6") void *, __reg("a0") CONST APTR parmPacket)="\tjsr\t-144(a6)";
+struct DeviceNode * __MakeDosNode(__reg("a6") void *, __reg("a0") CONST_APTR parmPacket)="\tjsr\t-144(a6)";
 #define MakeDosNode(parmPacket) __MakeDosNode(ExpansionBase, (parmPacket))
 
 BOOL __AddDosNode(__reg("a6") void *, __reg("d0") LONG bootPri, __reg("d1") ULONG flags, __reg("a0") struct DeviceNode * deviceNode)="\tjsr\t-150(a6)";

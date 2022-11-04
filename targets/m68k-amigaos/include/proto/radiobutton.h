@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_RADIOBUTTON_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/radiobutton_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *RadioButtonBase;
 #include <inline/radiobutton.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/radiobutton_protos.h>
+#endif
 #else
 #include <pragma/radiobutton_lib.h>
 #endif

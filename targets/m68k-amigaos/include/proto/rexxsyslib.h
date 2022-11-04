@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_REXXSYSLIB_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/rexxsyslib_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct RxsLib *RexxSysBase;
 #include <inline/rexxsyslib.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/rexxsyslib_protos.h>
+#endif
 #else
 #include <pragma/rexxsyslib_lib.h>
 #endif

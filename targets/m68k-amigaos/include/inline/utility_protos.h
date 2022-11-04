@@ -89,7 +89,7 @@ ULONG __UMult64(__reg("a6") void *, __reg("d0") ULONG arg1, __reg("d1") ULONG ar
 ULONG __PackStructureTags(__reg("a6") void *, __reg("a0") APTR pack, __reg("a1") CONST ULONG * packTable, __reg("a2") CONST struct TagItem * tagList)="\tjsr\t-210(a6)";
 #define PackStructureTags(pack, packTable, tagList) __PackStructureTags(UtilityBase, (pack), (packTable), (tagList))
 
-ULONG __UnpackStructureTags(__reg("a6") void *, __reg("a0") CONST APTR pack, __reg("a1") CONST ULONG * packTable, __reg("a2") struct TagItem * tagList)="\tjsr\t-216(a6)";
+ULONG __UnpackStructureTags(__reg("a6") void *, __reg("a0") CONST_APTR pack, __reg("a1") CONST ULONG * packTable, __reg("a2") struct TagItem * tagList)="\tjsr\t-216(a6)";
 #define UnpackStructureTags(pack, packTable, tagList) __UnpackStructureTags(UtilityBase, (pack), (packTable), (tagList))
 
 BOOL __AddNamedObject(__reg("a6") void *, __reg("a0") struct NamedObject * nameSpace, __reg("a1") struct NamedObject * object)="\tjsr\t-222(a6)";
@@ -99,14 +99,14 @@ struct NamedObject * __AllocNamedObjectA(__reg("a6") void *, __reg("a0") CONST_S
 #define AllocNamedObjectA(name, tagList) __AllocNamedObjectA(UtilityBase, (name), (tagList))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-struct NamedObject * __AllocNamedObject(__reg("a6") void *, __reg("a0") CONST_STRPTR name, Tag tagList, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-228(a6)\n\tmovea.l\t(a7)+,a1";
-#define AllocNamedObject(name, ...) __AllocNamedObject(UtilityBase, (name), __VA_ARGS__)
+struct NamedObject * __AllocNamedObject(__reg("a6") void *, __reg("a0") CONST_STRPTR name, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-228(a6)\n\tmovea.l\t(a7)+,a1";
+#define AllocNamedObject(...) __AllocNamedObject(UtilityBase, __VA_ARGS__)
 #endif
 
 LONG __AttemptRemNamedObject(__reg("a6") void *, __reg("a0") struct NamedObject * object)="\tjsr\t-234(a6)";
 #define AttemptRemNamedObject(object) __AttemptRemNamedObject(UtilityBase, (object))
 
-struct NamedObject * __FindNamedObject(__reg("a6") void *, __reg("a0") struct NamedObject * nameSpace, __reg("a1") CONST_STRPTR name, __reg("a2") struct NamedObject * lastObject)="\tjsr\t-240(a6)";
+struct NamedObject * __FindNamedObject(__reg("a6") void *, __reg("a0") struct NamedObject * nameSpace, __reg("a1") CONST_STRPTR name, __reg("a2") CONST struct NamedObject * lastObject)="\tjsr\t-240(a6)";
 #define FindNamedObject(nameSpace, name, lastObject) __FindNamedObject(UtilityBase, (nameSpace), (name), (lastObject))
 
 VOID __FreeNamedObject(__reg("a6") void *, __reg("a0") struct NamedObject * object)="\tjsr\t-246(a6)";
@@ -123,5 +123,25 @@ VOID __RemNamedObject(__reg("a6") void *, __reg("a0") struct NamedObject * objec
 
 ULONG __GetUniqueID(__reg("a6") void *)="\tjsr\t-270(a6)";
 #define GetUniqueID() __GetUniqueID(UtilityBase)
+
+LONG __VSNPrintf(__reg("a6") void *, __reg("a0") STRPTR buffer, __reg("d0") ULONG bufsize, __reg("a1") CONST_STRPTR fmt, __reg("a2") CONST_APTR data)="\tjsr\t-312(a6)";
+#define VSNPrintf(buffer, bufsize, fmt, data) __VSNPrintf(UtilityBase, (buffer), (bufsize), (fmt), (data))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+LONG __SNPrintf(__reg("a6") void *, __reg("a0") STRPTR buffer, __reg("d0") ULONG bufsize, __reg("a1") CONST_STRPTR fmt, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-312(a6)\n\tmovea.l\t(a7)+,a2";
+#define SNPrintf(buffer, bufsize, ...) __SNPrintf(UtilityBase, (buffer), (bufsize), __VA_ARGS__)
+#endif
+
+STRPTR __Strncpy(__reg("a6") void *, __reg("a1") STRPTR dst, __reg("a0") CONST_STRPTR src, __reg("d0") ULONG size)="\tjsr\t-438(a6)";
+#define Strncpy(dst, src, size) __Strncpy(UtilityBase, (dst), (src), (size))
+
+STRPTR __Strncat(__reg("a6") void *, __reg("a1") STRPTR dst, __reg("a0") CONST_STRPTR src, __reg("d0") ULONG size)="\tjsr\t-444(a6)";
+#define Strncat(dst, src, size) __Strncat(UtilityBase, (dst), (src), (size))
+
+LONG __SDivMod64(__reg("a6") void *, __reg("d1") LONG hi, __reg("d0") LONG lo, __reg("d2") LONG divisor)="\tjsr\t-450(a6)";
+#define SDivMod64(hi, lo, divisor) __SDivMod64(UtilityBase, (hi), (lo), (divisor))
+
+ULONG __UDivMod64(__reg("a6") void *, __reg("d1") ULONG hi, __reg("d0") ULONG lo, __reg("d2") ULONG divisor)="\tjsr\t-456(a6)";
+#define UDivMod64(hi, lo, divisor) __UDivMod64(UtilityBase, (hi), (lo), (divisor))
 
 #endif /*  _VBCCINLINE_UTILITY_H  */

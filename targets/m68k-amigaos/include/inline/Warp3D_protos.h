@@ -186,8 +186,10 @@ ULONG __W3D_SetCurrentColor(__reg("a6") void *, __reg("a0") W3D_Context * contex
 ULONG __W3D_SetCurrentPen(__reg("a6") void *, __reg("a0") W3D_Context * context, __reg("d1") ULONG pen)="\tjsr\t-366(a6)";
 #define W3D_SetCurrentPen(context, pen) __W3D_SetCurrentPen(Warp3DBase, (context), (pen))
 
+#if !defined(__SMALL_DATA__)
 ULONG __W3D_UpdateTexSubImage(__reg("a6") void *, __reg("a0") W3D_Context * context, __reg("a1") W3D_Texture * texture, __reg("a2") void * teximage, __reg("d1") ULONG lev, __reg("a3") ULONG * palette, __reg("a4") W3D_Scissor* scissor, __reg("d0") ULONG srcbpr)="\tjsr\t-372(a6)";
 #define W3D_UpdateTexSubImage(context, texture, teximage, lev, palette, scissor, srcbpr) __W3D_UpdateTexSubImage(Warp3DBase, (context), (texture), (teximage), (lev), (palette), (scissor), (srcbpr))
+#endif
 
 ULONG __W3D_FreeAllTexObj(__reg("a6") void *, __reg("a0") W3D_Context * context)="\tjsr\t-378(a6)";
 #define W3D_FreeAllTexObj(context) __W3D_FreeAllTexObj(Warp3DBase, (context))

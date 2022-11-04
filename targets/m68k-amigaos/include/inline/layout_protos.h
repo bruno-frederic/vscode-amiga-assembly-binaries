@@ -23,12 +23,16 @@ VOID __LayoutLimits(__reg("a6") void *, __reg("a0") struct Gadget * gadget, __re
 Class * __PAGE_GetClass(__reg("a6") void *)="\tjsr\t-60(a6)";
 #define PAGE_GetClass() __PAGE_GetClass(LayoutBase)
 
+#if !defined(__SMALL_DATA__)
 ULONG __SetPageGadgetAttrsA(__reg("a6") void *, __reg("a0") struct Gadget * gadget, __reg("a1") Object * object, __reg("a2") struct Window * window, __reg("a3") struct Requester * requester, __reg("a4") struct TagItem * tags)="\tjsr\t-66(a6)";
 #define SetPageGadgetAttrsA(gadget, object, window, requester, tags) __SetPageGadgetAttrsA(LayoutBase, (gadget), (object), (window), (requester), (tags))
+#endif
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+#if !defined(__SMALL_DATA__)
 ULONG __SetPageGadgetAttrs(__reg("a6") void *, __reg("a0") struct Gadget * gadget, __reg("a1") Object * object, __reg("a2") struct Window * window, __reg("a3") struct Requester * requester, ...)="\tmove.l\ta4,-(a7)\n\tlea\t4(a7),a4\n\tjsr\t-66(a6)\n\tmovea.l\t(a7)+,a4";
 #define SetPageGadgetAttrs(gadget, object, window, ...) __SetPageGadgetAttrs(LayoutBase, (gadget), (object), (window), __VA_ARGS__)
+#endif
 #endif
 
 VOID __RefreshPageGadget(__reg("a6") void *, __reg("a0") struct Gadget * gadget, __reg("a1") Object * object, __reg("a2") struct Window * window, __reg("a3") struct Requester * requester)="\tjsr\t-72(a6)";

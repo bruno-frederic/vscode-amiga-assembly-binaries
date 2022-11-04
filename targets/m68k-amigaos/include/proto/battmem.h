@@ -5,7 +5,9 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_BATTMEM_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/battmem_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
@@ -19,7 +21,9 @@ extern struct Library *BattMemBase;
 #include <inline/battmem.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/battmem_protos.h>
+#endif
 #else
 #include <pragma/battmem_lib.h>
 #endif

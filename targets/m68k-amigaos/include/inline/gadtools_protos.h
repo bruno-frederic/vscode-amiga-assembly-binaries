@@ -5,12 +5,12 @@
 #include <exec/types.h>
 #endif
 
-struct Gadget * __CreateGadgetA(__reg("a6") void *, __reg("d0") ULONG kind, __reg("a0") struct Gadget * gad, __reg("a1") CONST struct NewGadget * ng, __reg("a2") CONST struct TagItem * taglist)="\tjsr\t-30(a6)";
+struct Gadget * __CreateGadgetA(__reg("a6") void *, __reg("d0") ULONG kind, __reg("a0") struct Gadget * gad, __reg("a1") struct NewGadget * ng, __reg("a2") CONST struct TagItem * taglist)="\tjsr\t-30(a6)";
 #define CreateGadgetA(kind, gad, ng, taglist) __CreateGadgetA(GadToolsBase, (kind), (gad), (ng), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-struct Gadget * __CreateGadget(__reg("a6") void *, __reg("d0") ULONG kind, __reg("a0") struct Gadget * gad, __reg("a1") CONST struct NewGadget * ng, Tag taglist, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-30(a6)\n\tmovea.l\t(a7)+,a2";
-#define CreateGadget(kind, gad, ng, ...) __CreateGadget(GadToolsBase, (kind), (gad), (ng), __VA_ARGS__)
+struct Gadget * __CreateGadget(__reg("a6") void *, __reg("d0") ULONG kind, __reg("a0") struct Gadget * gad, __reg("a1") struct NewGadget * ng, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-30(a6)\n\tmovea.l\t(a7)+,a2";
+#define CreateGadget(kind, gad, ...) __CreateGadget(GadToolsBase, (kind), (gad), __VA_ARGS__)
 #endif
 
 VOID __FreeGadgets(__reg("a6") void *, __reg("a0") struct Gadget * gad)="\tjsr\t-36(a6)";
@@ -20,16 +20,16 @@ VOID __GT_SetGadgetAttrsA(__reg("a6") void *, __reg("a0") struct Gadget * gad, _
 #define GT_SetGadgetAttrsA(gad, win, req, taglist) __GT_SetGadgetAttrsA(GadToolsBase, (gad), (win), (req), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-VOID __GT_SetGadgetAttrs(__reg("a6") void *, __reg("a0") struct Gadget * gad, __reg("a1") struct Window * win, __reg("a2") struct Requester * req, Tag taglist, ...)="\tmove.l\ta3,-(a7)\n\tlea\t4(a7),a3\n\tjsr\t-42(a6)\n\tmovea.l\t(a7)+,a3";
-#define GT_SetGadgetAttrs(gad, win, req, ...) __GT_SetGadgetAttrs(GadToolsBase, (gad), (win), (req), __VA_ARGS__)
+VOID __GT_SetGadgetAttrs(__reg("a6") void *, __reg("a0") struct Gadget * gad, __reg("a1") struct Window * win, __reg("a2") struct Requester * req, ...)="\tmove.l\ta3,-(a7)\n\tlea\t4(a7),a3\n\tjsr\t-42(a6)\n\tmovea.l\t(a7)+,a3";
+#define GT_SetGadgetAttrs(gad, win, ...) __GT_SetGadgetAttrs(GadToolsBase, (gad), (win), __VA_ARGS__)
 #endif
 
-struct Menu * __CreateMenusA(__reg("a6") void *, __reg("a0") CONST struct NewMenu * newmenu, __reg("a1") CONST struct TagItem * taglist)="\tjsr\t-48(a6)";
+struct Menu * __CreateMenusA(__reg("a6") void *, __reg("a0") CONST struct NewMenu * newmenu, __reg("a1") struct TagItem * taglist)="\tjsr\t-48(a6)";
 #define CreateMenusA(newmenu, taglist) __CreateMenusA(GadToolsBase, (newmenu), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-struct Menu * __CreateMenus(__reg("a6") void *, __reg("a0") CONST struct NewMenu * newmenu, Tag taglist, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-48(a6)\n\tmovea.l\t(a7)+,a1";
-#define CreateMenus(newmenu, ...) __CreateMenus(GadToolsBase, (newmenu), __VA_ARGS__)
+struct Menu * __CreateMenus(__reg("a6") void *, __reg("a0") CONST struct NewMenu * newmenu, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-48(a6)\n\tmovea.l\t(a7)+,a1";
+#define CreateMenus(...) __CreateMenus(GadToolsBase, __VA_ARGS__)
 #endif
 
 VOID __FreeMenus(__reg("a6") void *, __reg("a0") struct Menu * menu)="\tjsr\t-54(a6)";
@@ -39,16 +39,16 @@ BOOL __LayoutMenuItemsA(__reg("a6") void *, __reg("a0") struct MenuItem * firsti
 #define LayoutMenuItemsA(firstitem, vi, taglist) __LayoutMenuItemsA(GadToolsBase, (firstitem), (vi), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-BOOL __LayoutMenuItems(__reg("a6") void *, __reg("a0") struct MenuItem * firstitem, __reg("a1") APTR vi, Tag taglist, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-60(a6)\n\tmovea.l\t(a7)+,a2";
-#define LayoutMenuItems(firstitem, vi, ...) __LayoutMenuItems(GadToolsBase, (firstitem), (vi), __VA_ARGS__)
+BOOL __LayoutMenuItems(__reg("a6") void *, __reg("a0") struct MenuItem * firstitem, __reg("a1") APTR vi, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-60(a6)\n\tmovea.l\t(a7)+,a2";
+#define LayoutMenuItems(firstitem, ...) __LayoutMenuItems(GadToolsBase, (firstitem), __VA_ARGS__)
 #endif
 
 BOOL __LayoutMenusA(__reg("a6") void *, __reg("a0") struct Menu * firstmenu, __reg("a1") APTR vi, __reg("a2") CONST struct TagItem * taglist)="\tjsr\t-66(a6)";
 #define LayoutMenusA(firstmenu, vi, taglist) __LayoutMenusA(GadToolsBase, (firstmenu), (vi), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-BOOL __LayoutMenus(__reg("a6") void *, __reg("a0") struct Menu * firstmenu, __reg("a1") APTR vi, Tag taglist, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-66(a6)\n\tmovea.l\t(a7)+,a2";
-#define LayoutMenus(firstmenu, vi, ...) __LayoutMenus(GadToolsBase, (firstmenu), (vi), __VA_ARGS__)
+BOOL __LayoutMenus(__reg("a6") void *, __reg("a0") struct Menu * firstmenu, __reg("a1") APTR vi, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-66(a6)\n\tmovea.l\t(a7)+,a2";
+#define LayoutMenus(firstmenu, ...) __LayoutMenus(GadToolsBase, (firstmenu), __VA_ARGS__)
 #endif
 
 struct IntuiMessage * __GT_GetIMsg(__reg("a6") void *, __reg("a0") struct MsgPort * iport)="\tjsr\t-72(a6)";
@@ -79,27 +79,43 @@ VOID __DrawBevelBoxA(__reg("a6") void *, __reg("a0") struct RastPort * rport, __
 #define DrawBevelBoxA(rport, left, top, width, height, taglist) __DrawBevelBoxA(GadToolsBase, (rport), (left), (top), (width), (height), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-VOID __DrawBevelBox(__reg("a6") void *, __reg("a0") struct RastPort * rport, __reg("d0") LONG left, __reg("d1") LONG top, __reg("d2") LONG width, __reg("d3") LONG height, Tag taglist, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-120(a6)\n\tmovea.l\t(a7)+,a1";
-#define DrawBevelBox(rport, left, top, width, height, ...) __DrawBevelBox(GadToolsBase, (rport), (left), (top), (width), (height), __VA_ARGS__)
+VOID __DrawBevelBox(__reg("a6") void *, __reg("a0") struct RastPort * rport, __reg("d0") LONG left, __reg("d1") LONG top, __reg("d2") LONG width, __reg("d3") LONG height, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-120(a6)\n\tmovea.l\t(a7)+,a1";
+#define DrawBevelBox(rport, left, top, width, ...) __DrawBevelBox(GadToolsBase, (rport), (left), (top), (width), __VA_ARGS__)
 #endif
 
 APTR __GetVisualInfoA(__reg("a6") void *, __reg("a0") struct Screen * screen, __reg("a1") CONST struct TagItem * taglist)="\tjsr\t-126(a6)";
 #define GetVisualInfoA(screen, taglist) __GetVisualInfoA(GadToolsBase, (screen), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-APTR __GetVisualInfo(__reg("a6") void *, __reg("a0") struct Screen * screen, Tag taglist, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-126(a6)\n\tmovea.l\t(a7)+,a1";
-#define GetVisualInfo(screen, ...) __GetVisualInfo(GadToolsBase, (screen), __VA_ARGS__)
+APTR __GetVisualInfo(__reg("a6") void *, __reg("a0") struct Screen * screen, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-126(a6)\n\tmovea.l\t(a7)+,a1";
+#define GetVisualInfo(...) __GetVisualInfo(GadToolsBase, __VA_ARGS__)
 #endif
 
 VOID __FreeVisualInfo(__reg("a6") void *, __reg("a0") APTR vi)="\tjsr\t-132(a6)";
 #define FreeVisualInfo(vi) __FreeVisualInfo(GadToolsBase, (vi))
 
+LONG __SetDesignFontA(__reg("a6") void *, __reg("a0") APTR vi, __reg("a1") struct TextAttr * tattr, __reg("a2") CONST struct TagItem * tags)="\tjsr\t-138(a6)";
+#define SetDesignFontA(vi, tattr, tags) __SetDesignFontA(GadToolsBase, (vi), (tattr), (tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+LONG __SetDesignFont(__reg("a6") void *, __reg("a0") APTR vi, __reg("a1") struct TextAttr * tattr, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-138(a6)\n\tmovea.l\t(a7)+,a2";
+#define SetDesignFont(vi, ...) __SetDesignFont(GadToolsBase, (vi), __VA_ARGS__)
+#endif
+
+LONG __ScaleGadgetRectA(__reg("a6") void *, __reg("a0") struct NewGadget * ng, __reg("a1") CONST struct TagItem * tags)="\tjsr\t-144(a6)";
+#define ScaleGadgetRectA(ng, tags) __ScaleGadgetRectA(GadToolsBase, (ng), (tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+LONG __ScaleGadgetRect(__reg("a6") void *, __reg("a0") struct NewGadget * ng, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-144(a6)\n\tmovea.l\t(a7)+,a1";
+#define ScaleGadgetRect(...) __ScaleGadgetRect(GadToolsBase, __VA_ARGS__)
+#endif
+
 LONG __GT_GetGadgetAttrsA(__reg("a6") void *, __reg("a0") struct Gadget * gad, __reg("a1") struct Window * win, __reg("a2") struct Requester * req, __reg("a3") CONST struct TagItem * taglist)="\tjsr\t-174(a6)";
 #define GT_GetGadgetAttrsA(gad, win, req, taglist) __GT_GetGadgetAttrsA(GadToolsBase, (gad), (win), (req), (taglist))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-LONG __GT_GetGadgetAttrs(__reg("a6") void *, __reg("a0") struct Gadget * gad, __reg("a1") struct Window * win, __reg("a2") struct Requester * req, Tag taglist, ...)="\tmove.l\ta3,-(a7)\n\tlea\t4(a7),a3\n\tjsr\t-174(a6)\n\tmovea.l\t(a7)+,a3";
-#define GT_GetGadgetAttrs(gad, win, req, ...) __GT_GetGadgetAttrs(GadToolsBase, (gad), (win), (req), __VA_ARGS__)
+LONG __GT_GetGadgetAttrs(__reg("a6") void *, __reg("a0") struct Gadget * gad, __reg("a1") struct Window * win, __reg("a2") struct Requester * req, ...)="\tmove.l\ta3,-(a7)\n\tlea\t4(a7),a3\n\tjsr\t-174(a6)\n\tmovea.l\t(a7)+,a3";
+#define GT_GetGadgetAttrs(gad, win, ...) __GT_GetGadgetAttrs(GadToolsBase, (gad), (win), __VA_ARGS__)
 #endif
 
 #endif /*  _VBCCINLINE_GADTOOLS_H  */

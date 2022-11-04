@@ -12,8 +12,8 @@ struct Node * __AllocSpeedButtonNodeA(__reg("a6") void *, __reg("d0") ULONG numb
 #define AllocSpeedButtonNodeA(number, tags) __AllocSpeedButtonNodeA(SpeedBarBase, (number), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-struct Node * __AllocSpeedButtonNode(__reg("a6") void *, __reg("d0") ULONG number, Tag tags, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-36(a6)\n\tmovea.l\t(a7)+,a0";
-#define AllocSpeedButtonNode(number, ...) __AllocSpeedButtonNode(SpeedBarBase, (number), __VA_ARGS__)
+struct Node * __AllocSpeedButtonNode(__reg("a6") void *, __reg("d0") ULONG number, ...)="\tmove.l\ta0,-(a7)\n\tlea\t4(a7),a0\n\tjsr\t-36(a6)\n\tmovea.l\t(a7)+,a0";
+#define AllocSpeedButtonNode(...) __AllocSpeedButtonNode(SpeedBarBase, __VA_ARGS__)
 #endif
 
 VOID __FreeSpeedButtonNode(__reg("a6") void *, __reg("a0") struct Node * node)="\tjsr\t-42(a6)";

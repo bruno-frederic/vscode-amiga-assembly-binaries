@@ -38,13 +38,13 @@ LONG __CardProgramVoltage(__reg("a6") void *, __reg("a1") struct CardHandle * ha
 BOOL __CardResetCard(__reg("a6") void *, __reg("a1") struct CardHandle * handle)="\tjsr\t-66(a6)";
 #define CardResetCard(handle) __CardResetCard(CardResource, (handle))
 
-BOOL __CopyTuple(__reg("a6") void *, __reg("a1") CONST struct CardHandle * handle, __reg("a0") UBYTE * buffer, __reg("d1") ULONG tuplecode, __reg("d0") ULONG size)="\tjsr\t-72(a6)";
+BOOL __CopyTuple(__reg("a6") void *, __reg("a1") struct CardHandle * handle, __reg("a0") UBYTE * buffer, __reg("d1") ULONG tuplecode, __reg("d0") ULONG size)="\tjsr\t-72(a6)";
 #define CopyTuple(handle, buffer, tuplecode, size) __CopyTuple(CardResource, (handle), (buffer), (tuplecode), (size))
 
 ULONG __DeviceTuple(__reg("a6") void *, __reg("a0") CONST UBYTE * tuple_data, __reg("a1") struct DeviceTData * storage)="\tjsr\t-78(a6)";
 #define DeviceTuple(tuple_data, storage) __DeviceTuple(CardResource, (tuple_data), (storage))
 
-struct Resident * __IfAmigaXIP(__reg("a6") void *, __reg("a2") CONST struct CardHandle * handle)="\tjsr\t-84(a6)";
+struct Resident * __IfAmigaXIP(__reg("a6") void *, __reg("a2") struct CardHandle * handle)="\tjsr\t-84(a6)";
 #define IfAmigaXIP(handle) __IfAmigaXIP(CardResource, (handle))
 
 BOOL __CardForceChange(__reg("a6") void *)="\tjsr\t-90(a6)";

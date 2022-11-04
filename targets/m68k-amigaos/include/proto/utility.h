@@ -5,11 +5,13 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_UTILITY_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/utility_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
-extern struct UtilityBase *UtilityBase;
+extern struct Library *UtilityBase;
 #endif
 
 #ifdef __GNUC__
@@ -19,7 +21,9 @@ extern struct UtilityBase *UtilityBase;
 #include <inline/utility.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/utility_protos.h>
+#endif
 #else
 #include <pragma/utility_lib.h>
 #endif

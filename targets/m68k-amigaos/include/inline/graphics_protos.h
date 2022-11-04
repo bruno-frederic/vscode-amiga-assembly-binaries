@@ -23,10 +23,10 @@ WORD __TextLength(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("a
 LONG __Text(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("a0") CONST_STRPTR string, __reg("d0") ULONG count)="\tjsr\t-60(a6)";
 #define Text(rp, string, count) __Text(GfxBase, (rp), (string), (count))
 
-LONG __SetFont(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("a0") CONST struct TextFont * textFont)="\tjsr\t-66(a6)";
+LONG __SetFont(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("a0") struct TextFont * textFont)="\tjsr\t-66(a6)";
 #define SetFont(rp, textFont) __SetFont(GfxBase, (rp), (textFont))
 
-struct TextFont * __OpenFont(__reg("a6") void *, __reg("a0") struct TextAttr * textAttr)="\tjsr\t-72(a6)";
+struct TextFont * __OpenFont(__reg("a6") void *, __reg("a0") CONST struct TextAttr * textAttr)="\tjsr\t-72(a6)";
 #define OpenFont(textAttr) __OpenFont(GfxBase, (textAttr))
 
 VOID __CloseFont(__reg("a6") void *, __reg("a1") struct TextFont * textFont)="\tjsr\t-78(a6)";
@@ -176,10 +176,10 @@ VOID __InitView(__reg("a6") void *, __reg("a1") struct View * view)="\tjsr\t-360
 VOID __CBump(__reg("a6") void *, __reg("a1") struct UCopList * copList)="\tjsr\t-366(a6)";
 #define CBump(copList) __CBump(GfxBase, (copList))
 
-VOID __CMove(__reg("a6") void *, __reg("a1") struct UCopList * copList, __reg("d0") APTR destination, __reg("d1") LONG data)="\tjsr\t-372(a6)";
+LONG __CMove(__reg("a6") void *, __reg("a1") struct UCopList * copList, __reg("d0") APTR destination, __reg("d1") LONG data)="\tjsr\t-372(a6)";
 #define CMove(copList, destination, data) __CMove(GfxBase, (copList), (destination), (data))
 
-VOID __CWait(__reg("a6") void *, __reg("a1") struct UCopList * copList, __reg("d0") LONG v, __reg("d1") LONG h)="\tjsr\t-378(a6)";
+LONG __CWait(__reg("a6") void *, __reg("a1") struct UCopList * copList, __reg("d0") LONG v, __reg("d1") LONG h)="\tjsr\t-378(a6)";
 #define CWait(copList, v, h) __CWait(GfxBase, (copList), (v), (h))
 
 LONG __VBeamPos(__reg("a6") void *)="\tjsr\t-384(a6)";
@@ -320,7 +320,7 @@ APTR __GfxNew(__reg("a6") void *, __reg("d0") ULONG gfxNodeType)="\tjsr\t-660(a6
 VOID __GfxFree(__reg("a6") void *, __reg("a0") APTR gfxNodePtr)="\tjsr\t-666(a6)";
 #define GfxFree(gfxNodePtr) __GfxFree(GfxBase, (gfxNodePtr))
 
-VOID __GfxAssociate(__reg("a6") void *, __reg("a0") CONST APTR associateNode, __reg("a1") APTR gfxNodePtr)="\tjsr\t-672(a6)";
+VOID __GfxAssociate(__reg("a6") void *, __reg("a0") APTR associateNode, __reg("a1") APTR gfxNodePtr)="\tjsr\t-672(a6)";
 #define GfxAssociate(associateNode, gfxNodePtr) __GfxAssociate(GfxBase, (associateNode), (gfxNodePtr))
 
 VOID __BitMapScale(__reg("a6") void *, __reg("a0") struct BitScaleArgs * bitScaleArgs)="\tjsr\t-678(a6)";
@@ -335,11 +335,16 @@ WORD __TextExtent(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("a
 ULONG __TextFit(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("a0") CONST_STRPTR string, __reg("d0") ULONG strLen, __reg("a2") CONST struct TextExtent * textExtent, __reg("a3") CONST struct TextExtent * constrainingExtent, __reg("d1") LONG strDirection, __reg("d2") ULONG constrainingBitWidth, __reg("d3") ULONG constrainingBitHeight)="\tjsr\t-696(a6)";
 #define TextFit(rp, string, strLen, textExtent, constrainingExtent, strDirection, constrainingBitWidth, constrainingBitHeight) __TextFit(GfxBase, (rp), (string), (strLen), (textExtent), (constrainingExtent), (strDirection), (constrainingBitWidth), (constrainingBitHeight))
 
-APTR __GfxLookUp(__reg("a6") void *, __reg("a0") CONST APTR associateNode)="\tjsr\t-702(a6)";
+APTR __GfxLookUp(__reg("a6") void *, __reg("a0") CONST_APTR associateNode)="\tjsr\t-702(a6)";
 #define GfxLookUp(associateNode) __GfxLookUp(GfxBase, (associateNode))
 
 BOOL __VideoControl(__reg("a6") void *, __reg("a0") struct ColorMap * colorMap, __reg("a1") struct TagItem * tagarray)="\tjsr\t-708(a6)";
 #define VideoControl(colorMap, tagarray) __VideoControl(GfxBase, (colorMap), (tagarray))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+BOOL __VideoControlTags(__reg("a6") void *, __reg("a0") struct ColorMap * colorMap, ULONG tagarray, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-708(a6)\n\tmovea.l\t(a7)+,a1";
+#define VideoControlTags(colorMap, ...) __VideoControlTags(GfxBase, (colorMap), __VA_ARGS__)
+#endif
 
 struct MonitorSpec * __OpenMonitor(__reg("a6") void *, __reg("a1") CONST_STRPTR monitorName, __reg("d0") ULONG displayID)="\tjsr\t-714(a6)";
 #define OpenMonitor(monitorName, displayID) __OpenMonitor(GfxBase, (monitorName), (displayID))
@@ -353,7 +358,7 @@ DisplayInfoHandle __FindDisplayInfo(__reg("a6") void *, __reg("d0") ULONG displa
 ULONG __NextDisplayInfo(__reg("a6") void *, __reg("d0") ULONG displayID)="\tjsr\t-732(a6)";
 #define NextDisplayInfo(displayID) __NextDisplayInfo(GfxBase, (displayID))
 
-ULONG __GetDisplayInfoData(__reg("a6") void *, __reg("a0") CONST DisplayInfoHandle handle, __reg("a1") APTR buf, __reg("d0") ULONG size, __reg("d1") ULONG tagID, __reg("d2") ULONG displayID)="\tjsr\t-756(a6)";
+ULONG __GetDisplayInfoData(__reg("a6") void *, __reg("a0") DisplayInfoHandle handle, __reg("a1") APTR buf, __reg("d0") ULONG size, __reg("d1") ULONG tagID, __reg("d2") ULONG displayID)="\tjsr\t-756(a6)";
 #define GetDisplayInfoData(handle, buf, size, tagID, displayID) __GetDisplayInfoData(GfxBase, (handle), (buf), (size), (tagID), (displayID))
 
 VOID __FontExtent(__reg("a6") void *, __reg("a0") CONST struct TextFont * font, __reg("a1") struct TextExtent * fontExtent)="\tjsr\t-762(a6)";
@@ -377,11 +382,24 @@ LONG __GetVPModeID(__reg("a6") void *, __reg("a0") CONST struct ViewPort * vp)="
 LONG __ModeNotAvailable(__reg("a6") void *, __reg("d0") ULONG modeID)="\tjsr\t-798(a6)";
 #define ModeNotAvailable(modeID) __ModeNotAvailable(GfxBase, (modeID))
 
+WORD __WeighTAMatch(__reg("a6") void *, __reg("a0") CONST struct TextAttr * reqTextAttr, __reg("a1") CONST struct TextAttr * targetTextAttr, __reg("a2") CONST struct TagItem * targetTags)="\tjsr\t-804(a6)";
+#define WeighTAMatch(reqTextAttr, targetTextAttr, targetTags) __WeighTAMatch(GfxBase, (reqTextAttr), (targetTextAttr), (targetTags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+WORD __WeighTAMatchTags(__reg("a6") void *, __reg("a0") CONST struct TextAttr * reqTextAttr, __reg("a1") CONST struct TextAttr * targetTextAttr, ULONG targetTags, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-804(a6)\n\tmovea.l\t(a7)+,a2";
+#define WeighTAMatchTags(reqTextAttr, targetTextAttr, ...) __WeighTAMatchTags(GfxBase, (reqTextAttr), (targetTextAttr), __VA_ARGS__)
+#endif
+
 VOID __EraseRect(__reg("a6") void *, __reg("a1") struct RastPort * rp, __reg("d0") LONG xMin, __reg("d1") LONG yMin, __reg("d2") LONG xMax, __reg("d3") LONG yMax)="\tjsr\t-810(a6)";
 #define EraseRect(rp, xMin, yMin, xMax, yMax) __EraseRect(GfxBase, (rp), (xMin), (yMin), (xMax), (yMax))
 
 ULONG __ExtendFont(__reg("a6") void *, __reg("a0") struct TextFont * font, __reg("a1") CONST struct TagItem * fontTags)="\tjsr\t-816(a6)";
 #define ExtendFont(font, fontTags) __ExtendFont(GfxBase, (font), (fontTags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+ULONG __ExtendFontTags(__reg("a6") void *, __reg("a0") struct TextFont * font, ULONG fontTags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-816(a6)\n\tmovea.l\t(a7)+,a1";
+#define ExtendFontTags(font, ...) __ExtendFontTags(GfxBase, (font), __VA_ARGS__)
+#endif
 
 VOID __StripFont(__reg("a6") void *, __reg("a0") struct TextFont * font)="\tjsr\t-822(a6)";
 #define StripFont(font) __StripFont(GfxBase, (font))
@@ -507,11 +525,11 @@ VOID __SetRPAttrs(__reg("a6") void *, __reg("a0") struct RastPort * rp, ULONG ta
 #define SetRPAttrs(rp, ...) __SetRPAttrs(GfxBase, (rp), __VA_ARGS__)
 #endif
 
-VOID __GetRPAttrsA(__reg("a6") void *, __reg("a0") CONST struct RastPort * rp, __reg("a1") CONST struct TagItem * tags)="\tjsr\t-1044(a6)";
+VOID __GetRPAttrsA(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") CONST struct TagItem * tags)="\tjsr\t-1044(a6)";
 #define GetRPAttrsA(rp, tags) __GetRPAttrsA(GfxBase, (rp), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-VOID __GetRPAttrs(__reg("a6") void *, __reg("a0") CONST struct RastPort * rp, ULONG tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-1044(a6)\n\tmovea.l\t(a7)+,a1";
+VOID __GetRPAttrs(__reg("a6") void *, __reg("a0") struct RastPort * rp, ULONG tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-1044(a6)\n\tmovea.l\t(a7)+,a1";
 #define GetRPAttrs(rp, ...) __GetRPAttrs(GfxBase, (rp), __VA_ARGS__)
 #endif
 
@@ -523,7 +541,7 @@ ULONG __BestModeID(__reg("a6") void *, ULONG tags, ...)="\tmove.l\ta0,-(a7)\n\tl
 #define BestModeID(...) __BestModeID(GfxBase, __VA_ARGS__)
 #endif
 
-VOID __WriteChunkyPixels(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("d0") ULONG xstart, __reg("d1") ULONG ystart, __reg("d2") ULONG xstop, __reg("d3") ULONG ystop, __reg("a2") CONST UBYTE * array, __reg("d4") LONG bytesperrow)="\tjsr\t-1056(a6)";
+VOID __WriteChunkyPixels(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("d0") ULONG xstart, __reg("d1") ULONG ystart, __reg("d2") ULONG xstop, __reg("d3") ULONG ystop, __reg("a2") UBYTE * array, __reg("d4") LONG bytesperrow)="\tjsr\t-1056(a6)";
 #define WriteChunkyPixels(rp, xstart, ystart, xstop, ystop, array, bytesperrow) __WriteChunkyPixels(GfxBase, (rp), (xstart), (ystart), (xstop), (ystop), (array), (bytesperrow))
 
 #endif /*  _VBCCINLINE_GRAPHICS_H  */

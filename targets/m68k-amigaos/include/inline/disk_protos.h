@@ -11,7 +11,7 @@ BOOL __AllocUnit(__reg("a6") void *, __reg("d0") LONG unitNum)="\tjsr\t-6(a6)";
 VOID __FreeUnit(__reg("a6") void *, __reg("d0") LONG unitNum)="\tjsr\t-12(a6)";
 #define FreeUnit(unitNum) __FreeUnit(DiskBase, (unitNum))
 
-struct DiscResourceUnit * __GetUnit(__reg("a6") void *, __reg("a1") struct DiscResourceUnit * unitPointer)="\tjsr\t-18(a6)";
+struct DiskResourceUnit * __GetUnit(__reg("a6") void *, __reg("a1") struct DiskResourceUnit * unitPointer)="\tjsr\t-18(a6)";
 #define GetUnit(unitPointer) __GetUnit(DiskBase, (unitPointer))
 
 VOID __GiveUnit(__reg("a6") void *)="\tjsr\t-24(a6)";

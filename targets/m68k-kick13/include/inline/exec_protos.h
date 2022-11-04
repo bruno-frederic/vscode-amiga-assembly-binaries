@@ -26,8 +26,8 @@ struct Resident * __FindResident(__reg("a6") void *, __reg("a1") const STRPTR na
 void * __InitResident(__reg("a6") void *, __reg("a1") const struct Resident * resident, __reg("d1") ULONG segList)="\tjsr\t-102(a6)";
 #define InitResident(resident, segList) __InitResident(SysBase, (resident), (segList))
 
-VOID __Alert(__reg("a6") void *, __reg("d7") ULONG alertNum)="\tjsr\t-108(a6)";
-#define Alert(alertNum) __Alert(SysBase, (alertNum))
+VOID __Alert(__reg("a6") void *, __reg("d7") ULONG alertNum, __reg("a5") ULONG * parameter)="\tjsr\t-108(a6)";
+#define Alert(alertNum, parameter) __Alert(SysBase, (alertNum), (parameter))
 
 VOID __Debug(__reg("a6") void *, __reg("d0") ULONG flags)="\tjsr\t-114(a6)";
 #define Debug(flags) __Debug(SysBase, (flags))

@@ -26,8 +26,8 @@ BOOL __SetPlayerAttrsA(__reg("a6") void *, __reg("a0") struct Player * player, _
 #define SetPlayerAttrsA(player, tagList) __SetPlayerAttrsA(RealTimeBase, (player), (tagList))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-BOOL __SetPlayerAttrs(__reg("a6") void *, __reg("a0") struct Player * player, Tag tagList, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-54(a6)\n\tmovea.l\t(a7)+,a1";
-#define SetPlayerAttrs(player, ...) __SetPlayerAttrs(RealTimeBase, (player), __VA_ARGS__)
+BOOL __SetPlayerAttrs(__reg("a6") void *, __reg("a0") struct Player * player, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-54(a6)\n\tmovea.l\t(a7)+,a1";
+#define SetPlayerAttrs(...) __SetPlayerAttrs(RealTimeBase, __VA_ARGS__)
 #endif
 
 LONG __SetConductorState(__reg("a6") void *, __reg("a0") struct Player * player, __reg("d0") ULONG state, __reg("d1") LONG time)="\tjsr\t-60(a6)";
@@ -42,12 +42,12 @@ struct Conductor * __NextConductor(__reg("a6") void *, __reg("a0") CONST struct 
 struct Conductor * __FindConductor(__reg("a6") void *, __reg("a0") CONST_STRPTR name)="\tjsr\t-78(a6)";
 #define FindConductor(name) __FindConductor(RealTimeBase, (name))
 
-ULONG __GetPlayerAttrsA(__reg("a6") void *, __reg("a0") CONST struct Player * player, __reg("a1") CONST struct TagItem * tagList)="\tjsr\t-84(a6)";
+ULONG __GetPlayerAttrsA(__reg("a6") void *, __reg("a0") struct Player * player, __reg("a1") CONST struct TagItem * tagList)="\tjsr\t-84(a6)";
 #define GetPlayerAttrsA(player, tagList) __GetPlayerAttrsA(RealTimeBase, (player), (tagList))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-ULONG __GetPlayerAttrs(__reg("a6") void *, __reg("a0") CONST struct Player * player, Tag tagList, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-84(a6)\n\tmovea.l\t(a7)+,a1";
-#define GetPlayerAttrs(player, ...) __GetPlayerAttrs(RealTimeBase, (player), __VA_ARGS__)
+ULONG __GetPlayerAttrs(__reg("a6") void *, __reg("a0") struct Player * player, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-84(a6)\n\tmovea.l\t(a7)+,a1";
+#define GetPlayerAttrs(...) __GetPlayerAttrs(RealTimeBase, __VA_ARGS__)
 #endif
 
 #endif /*  _VBCCINLINE_REALTIME_H  */

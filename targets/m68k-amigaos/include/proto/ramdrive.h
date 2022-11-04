@@ -5,11 +5,13 @@
 #include <exec/types.h>
 #endif
 #if !defined(CLIB_RAMDRIVE_PROTOS_H) && !defined(__GNUC__)
+#pragma stdargs-on
 #include <clib/ramdrive_protos.h>
+#pragma stdargs-off
 #endif
 
 #ifndef __NOLIBBASE__
-extern struct Library *RamdriveDevice;
+extern struct Device *RamdriveDevice;
 #endif
 
 #ifdef __GNUC__
@@ -19,7 +21,9 @@ extern struct Library *RamdriveDevice;
 #include <inline/ramdrive.h>
 #endif
 #elif defined(__VBCC__)
+#ifndef _NO_INLINE
 #include <inline/ramdrive_protos.h>
+#endif
 #else
 #include <pragma/ramdrive_lib.h>
 #endif

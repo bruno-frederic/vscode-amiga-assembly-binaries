@@ -110,7 +110,8 @@ UWORD __RemoveGadget(__reg("a6") void *, __reg("a0") struct Window * window, __r
 VOID __ReportMouse(__reg("a6") void *, __reg("d0") LONG flag, __reg("a0") struct Window * window)="\tjsr\t-234(a6)";
 #define ReportMouse(flag, window) __ReportMouse(IntuitionBase, (flag), (window))
 
-#define ReportMouse1(flag, window) __ReportMouse(IntuitionBase, (flag), (window))
+VOID __ReportMouse1(__reg("a6") void *, __reg("d0") struct Window * flag, __reg("a0") void * window)="\tjsr\t-234(a6)";
+#define ReportMouse1(flag, window) __ReportMouse1(IntuitionBase, (flag), (void *)(window))
 
 BOOL __Request(__reg("a6") void *, __reg("a0") struct Requester * requester, __reg("a1") struct Window * window)="\tjsr\t-240(a6)";
 #define Request(requester, window) __Request(IntuitionBase, (requester), (window))

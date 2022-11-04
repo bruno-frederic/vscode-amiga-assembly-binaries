@@ -23,16 +23,16 @@ VOID __SetPopCycleNodeAttrsA(__reg("a6") void *, __reg("a0") struct Node * node,
 #define SetPopCycleNodeAttrsA(node, tags) __SetPopCycleNodeAttrsA(PopCycleBase, (node), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-VOID __SetPopCycleNodeAttrs(__reg("a6") void *, __reg("a0") struct Node * node, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-48(a6)\n\tmovea.l\t(a7)+,a1";
-#define SetPopCycleNodeAttrs(...) __SetPopCycleNodeAttrs(PopCycleBase, __VA_ARGS__)
+VOID __SetPopCycleNodeAttrs(__reg("a6") void *, __reg("a0") struct Node * node, Tag tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-48(a6)\n\tmovea.l\t(a7)+,a1";
+#define SetPopCycleNodeAttrs(node, ...) __SetPopCycleNodeAttrs(PopCycleBase, (node), __VA_ARGS__)
 #endif
 
 VOID __GetPopCycleNodeAttrsA(__reg("a6") void *, __reg("a0") struct Node * node, __reg("a1") struct TagItem * tags)="\tjsr\t-54(a6)";
 #define GetPopCycleNodeAttrsA(node, tags) __GetPopCycleNodeAttrsA(PopCycleBase, (node), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-VOID __GetPopCycleNodeAttrs(__reg("a6") void *, __reg("a0") struct Node * node, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-54(a6)\n\tmovea.l\t(a7)+,a1";
-#define GetPopCycleNodeAttrs(...) __GetPopCycleNodeAttrs(PopCycleBase, __VA_ARGS__)
+VOID __GetPopCycleNodeAttrs(__reg("a6") void *, __reg("a0") struct Node * node, Tag tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-54(a6)\n\tmovea.l\t(a7)+,a1";
+#define GetPopCycleNodeAttrs(node, ...) __GetPopCycleNodeAttrs(PopCycleBase, (node), __VA_ARGS__)
 #endif
 
 #endif /*  _VBCCINLINE_POPCYCLE_H  */

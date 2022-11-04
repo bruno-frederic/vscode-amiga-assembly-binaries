@@ -47,7 +47,7 @@ BOOL __DoubleClick(__reg("a6") void *, __reg("d0") ULONG sSeconds, __reg("d1") U
 VOID __DrawBorder(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") CONST struct Border * border, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset)="\tjsr\t-108(a6)";
 #define DrawBorder(rp, border, leftOffset, topOffset) __DrawBorder(IntuitionBase, (rp), (border), (leftOffset), (topOffset))
 
-VOID __DrawImage(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") struct Image * image, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset)="\tjsr\t-114(a6)";
+VOID __DrawImage(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") CONST struct Image * image, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset)="\tjsr\t-114(a6)";
 #define DrawImage(rp, image, leftOffset, topOffset) __DrawImage(IntuitionBase, (rp), (image), (leftOffset), (topOffset))
 
 VOID __EndRequest(__reg("a6") void *, __reg("a0") struct Requester * requester, __reg("a1") struct Window * window)="\tjsr\t-120(a6)";
@@ -110,6 +110,9 @@ UWORD __RemoveGadget(__reg("a6") void *, __reg("a0") struct Window * window, __r
 VOID __ReportMouse(__reg("a6") void *, __reg("d0") LONG flag, __reg("a0") struct Window * window)="\tjsr\t-234(a6)";
 #define ReportMouse(flag, window) __ReportMouse(IntuitionBase, (flag), (window))
 
+VOID __ReportMouse1(__reg("a6") void *, __reg("a0") struct Window * window, __reg("d0") LONG flag)="\tjsr\t-234(a6)";
+#define ReportMouse1(window, flag) __ReportMouse1(IntuitionBase, (window), (flag))
+
 BOOL __Request(__reg("a6") void *, __reg("a0") struct Requester * requester, __reg("a1") struct Window * window)="\tjsr\t-240(a6)";
 #define Request(requester, window) __Request(IntuitionBase, (requester), (window))
 
@@ -152,7 +155,7 @@ VOID __WindowToFront(__reg("a6") void *, __reg("a0") struct Window * window)="\t
 BOOL __WindowLimits(__reg("a6") void *, __reg("a0") struct Window * window, __reg("d0") LONG widthMin, __reg("d1") LONG heightMin, __reg("d2") ULONG widthMax, __reg("d3") ULONG heightMax)="\tjsr\t-318(a6)";
 #define WindowLimits(window, widthMin, heightMin, widthMax, heightMax) __WindowLimits(IntuitionBase, (window), (widthMin), (heightMin), (widthMax), (heightMax))
 
-struct Preferences * __SetPrefs(__reg("a6") void *, __reg("a0") CONST struct Preferences * preferences, __reg("d0") LONG size, __reg("d1") LONG inform)="\tjsr\t-324(a6)";
+struct Preferences  * __SetPrefs(__reg("a6") void *, __reg("a0") CONST struct Preferences * preferences, __reg("d0") LONG size, __reg("d1") LONG inform)="\tjsr\t-324(a6)";
 #define SetPrefs(preferences, size, inform) __SetPrefs(IntuitionBase, (preferences), (size), (inform))
 
 LONG __IntuiTextLength(__reg("a6") void *, __reg("a0") CONST struct IntuiText * iText)="\tjsr\t-330(a6)";
@@ -190,6 +193,9 @@ LONG __RethinkDisplay(__reg("a6") void *)="\tjsr\t-390(a6)";
 
 APTR __AllocRemember(__reg("a6") void *, __reg("a0") struct Remember ** rememberKey, __reg("d0") ULONG size, __reg("d1") ULONG flags)="\tjsr\t-396(a6)";
 #define AllocRemember(rememberKey, size, flags) __AllocRemember(IntuitionBase, (rememberKey), (size), (flags))
+
+VOID __AlohaWorkbench(__reg("a6") void *, __reg("a0") void * wbport)="\tjsr\t-402(a6)";
+#define AlohaWorkbench(wbport) __AlohaWorkbench(IntuitionBase, (void *)(wbport))
 
 VOID __FreeRemember(__reg("a6") void *, __reg("a0") struct Remember ** rememberKey, __reg("d0") LONG reallyForget)="\tjsr\t-408(a6)";
 #define FreeRemember(rememberKey, reallyForget) __FreeRemember(IntuitionBase, (rememberKey), (reallyForget))
@@ -266,7 +272,7 @@ UWORD __SetPubScreenModes(__reg("a6") void *, __reg("d0") ULONG modes)="\tjsr\t-
 UWORD __PubScreenStatus(__reg("a6") void *, __reg("a0") struct Screen * screen, __reg("d0") ULONG statusFlags)="\tjsr\t-552(a6)";
 #define PubScreenStatus(screen, statusFlags) __PubScreenStatus(IntuitionBase, (screen), (statusFlags))
 
-struct RastPort * __ObtainGIRPort(__reg("a6") void *, __reg("a0") struct GadgetInfo * gInfo)="\tjsr\t-558(a6)";
+struct RastPort	* __ObtainGIRPort(__reg("a6") void *, __reg("a0") struct GadgetInfo * gInfo)="\tjsr\t-558(a6)";
 #define ObtainGIRPort(gInfo) __ObtainGIRPort(IntuitionBase, (gInfo))
 
 VOID __ReleaseGIRPort(__reg("a6") void *, __reg("a0") struct RastPort * rp)="\tjsr\t-564(a6)";
@@ -278,7 +284,7 @@ VOID __GadgetMouse(__reg("a6") void *, __reg("a0") struct Gadget * gadget, __reg
 VOID __GetDefaultPubScreen(__reg("a6") void *, __reg("a0") STRPTR nameBuffer)="\tjsr\t-582(a6)";
 #define GetDefaultPubScreen(nameBuffer) __GetDefaultPubScreen(IntuitionBase, (nameBuffer))
 
-LONG __EasyRequestArgs(__reg("a6") void *, __reg("a0") struct Window * window, __reg("a1") CONST struct EasyStruct * easyStruct, __reg("a2") ULONG * idcmpPtr, __reg("a3") CONST APTR args)="\tjsr\t-588(a6)";
+LONG __EasyRequestArgs(__reg("a6") void *, __reg("a0") struct Window * window, __reg("a1") CONST struct EasyStruct * easyStruct, __reg("a2") ULONG * idcmpPtr, __reg("a3") CONST_APTR args)="\tjsr\t-588(a6)";
 #define EasyRequestArgs(window, easyStruct, idcmpPtr, args) __EasyRequestArgs(IntuitionBase, (window), (easyStruct), (idcmpPtr), (args))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
@@ -286,7 +292,7 @@ LONG __EasyRequest(__reg("a6") void *, __reg("a0") struct Window * window, __reg
 #define EasyRequest(window, easyStruct, ...) __EasyRequest(IntuitionBase, (window), (easyStruct), __VA_ARGS__)
 #endif
 
-struct Window * __BuildEasyRequestArgs(__reg("a6") void *, __reg("a0") struct Window * window, __reg("a1") CONST struct EasyStruct * easyStruct, __reg("d0") ULONG idcmp, __reg("a3") CONST APTR args)="\tjsr\t-594(a6)";
+struct Window * __BuildEasyRequestArgs(__reg("a6") void *, __reg("a0") struct Window * window, __reg("a1") CONST struct EasyStruct * easyStruct, __reg("d0") ULONG idcmp, __reg("a3") CONST_APTR args)="\tjsr\t-594(a6)";
 #define BuildEasyRequestArgs(window, easyStruct, idcmp, args) __BuildEasyRequestArgs(IntuitionBase, (window), (easyStruct), (idcmp), (args))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
@@ -313,13 +319,13 @@ struct Screen * __OpenScreenTags(__reg("a6") void *, __reg("a0") CONST struct Ne
 #define OpenScreenTags(newScreen, ...) __OpenScreenTags(IntuitionBase, (newScreen), __VA_ARGS__)
 #endif
 
-VOID __DrawImageState(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") struct Image * image, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset, __reg("d2") ULONG state, __reg("a2") CONST struct DrawInfo * drawInfo)="\tjsr\t-618(a6)";
+VOID __DrawImageState(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") CONST struct Image * image, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset, __reg("d2") ULONG state, __reg("a2") struct DrawInfo * drawInfo)="\tjsr\t-618(a6)";
 #define DrawImageState(rp, image, leftOffset, topOffset, state, drawInfo) __DrawImageState(IntuitionBase, (rp), (image), (leftOffset), (topOffset), (state), (drawInfo))
 
-BOOL __PointInImage(__reg("a6") void *, __reg("d0") ULONG point, __reg("a0") struct Image * image)="\tjsr\t-624(a6)";
+BOOL __PointInImage(__reg("a6") void *, __reg("d0") ULONG point, __reg("a0") CONST struct Image * image)="\tjsr\t-624(a6)";
 #define PointInImage(point, image) __PointInImage(IntuitionBase, (point), (image))
 
-VOID __EraseImage(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") struct Image * image, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset)="\tjsr\t-630(a6)";
+VOID __EraseImage(__reg("a6") void *, __reg("a0") struct RastPort * rp, __reg("a1") CONST struct Image * image, __reg("d0") LONG leftOffset, __reg("d1") LONG topOffset)="\tjsr\t-630(a6)";
 #define EraseImage(rp, image, leftOffset, topOffset) __EraseImage(IntuitionBase, (rp), (image), (leftOffset), (topOffset))
 
 APTR __NewObjectA(__reg("a6") void *, __reg("a0") struct IClass * classPtr, __reg("a1") CONST_STRPTR classID, __reg("a2") CONST struct TagItem * tagList)="\tjsr\t-636(a6)";
@@ -347,7 +353,7 @@ ULONG __SetGadgetAttrs(__reg("a6") void *, __reg("a0") struct Gadget * gadget, _
 #define SetGadgetAttrs(gadget, window, requester, ...) __SetGadgetAttrs(IntuitionBase, (gadget), (window), (requester), __VA_ARGS__)
 #endif
 
-APTR __NextObject(__reg("a6") void *, __reg("a0") APTR objectPtrPtr)="\tjsr\t-666(a6)";
+APTR __NextObject(__reg("a6") void *, __reg("a0") CONST_APTR objectPtrPtr)="\tjsr\t-666(a6)";
 #define NextObject(objectPtrPtr) __NextObject(IntuitionBase, (objectPtrPtr))
 
 struct IClass * __MakeClass(__reg("a6") void *, __reg("a0") CONST_STRPTR classID, __reg("a1") CONST_STRPTR superClassID, __reg("a2") CONST struct IClass * superClassPtr, __reg("d0") ULONG instanceSize, __reg("d1") ULONG flags)="\tjsr\t-678(a6)";
@@ -413,5 +419,19 @@ BOOL __TimedDisplayAlert(__reg("a6") void *, __reg("d0") ULONG alertNumber, __re
 
 VOID __HelpControl(__reg("a6") void *, __reg("a0") struct Window * win, __reg("d0") ULONG flags)="\tjsr\t-828(a6)";
 #define HelpControl(win, flags) __HelpControl(IntuitionBase, (win), (flags))
+
+BOOL __ShowWindow(__reg("a6") void *, __reg("a0") struct Window * window, __reg("a1") struct Window * other)="\tjsr\t-834(a6)";
+#define ShowWindow(window, other) __ShowWindow(IntuitionBase, (window), (other))
+
+BOOL __HideWindow(__reg("a6") void *, __reg("a0") struct Window * window)="\tjsr\t-840(a6)";
+#define HideWindow(window) __HideWindow(IntuitionBase, (window))
+
+ULONG __IntuitionControlA(__reg("a6") void *, __reg("a0") APTR object, __reg("a1") CONST struct TagItem * taglist)="\tjsr\t-1212(a6)";
+#define IntuitionControlA(object, taglist) __IntuitionControlA(IntuitionBase, (object), (taglist))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+ULONG __IntuitionControl(__reg("a6") void *, __reg("a0") APTR object, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-1212(a6)\n\tmovea.l\t(a7)+,a1";
+#define IntuitionControl(...) __IntuitionControl(IntuitionBase, __VA_ARGS__)
+#endif
 
 #endif /*  _VBCCINLINE_INTUITION_H  */

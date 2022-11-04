@@ -17,13 +17,13 @@ ULONG __ConvToLower(__reg("a6") void *, __reg("a0") struct Locale * locale, __re
 ULONG __ConvToUpper(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("d0") ULONG character)="\tjsr\t-54(a6)";
 #define ConvToUpper(locale, character) __ConvToUpper(LocaleBase, (locale), (character))
 
-VOID __FormatDate(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") STRPTR fmtTemplate, __reg("a2") struct DateStamp * date, __reg("a3") struct Hook * putCharFunc)="\tjsr\t-60(a6)";
+VOID __FormatDate(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") CONST_STRPTR fmtTemplate, __reg("a2") CONST struct DateStamp * date, __reg("a3") struct Hook * putCharFunc)="\tjsr\t-60(a6)";
 #define FormatDate(locale, fmtTemplate, date, putCharFunc) __FormatDate(LocaleBase, (locale), (fmtTemplate), (date), (putCharFunc))
 
-APTR __FormatString(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") STRPTR fmtTemplate, __reg("a2") APTR dataStream, __reg("a3") struct Hook * putCharFunc)="\tjsr\t-66(a6)";
+APTR __FormatString(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") CONST_STRPTR fmtTemplate, __reg("a2") APTR dataStream, __reg("a3") struct Hook * putCharFunc)="\tjsr\t-66(a6)";
 #define FormatString(locale, fmtTemplate, dataStream, putCharFunc) __FormatString(LocaleBase, (locale), (fmtTemplate), (dataStream), (putCharFunc))
 
-STRPTR __GetCatalogStr(__reg("a6") void *, __reg("a0") struct Catalog * catalog, __reg("d0") LONG stringNum, __reg("a1") STRPTR defaultString)="\tjsr\t-72(a6)";
+STRPTR __GetCatalogStr(__reg("a6") void *, __reg("a0") CONST struct Catalog * catalog, __reg("d0") LONG stringNum, __reg("a1") CONST_STRPTR defaultString)="\tjsr\t-72(a6)";
 #define GetCatalogStr(catalog, stringNum, defaultString) __GetCatalogStr(LocaleBase, (catalog), (stringNum), (defaultString))
 
 STRPTR __GetLocaleStr(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("d0") ULONG stringNum)="\tjsr\t-78(a6)";
@@ -62,24 +62,24 @@ BOOL __IsUpper(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("d0
 BOOL __IsXDigit(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("d0") ULONG character)="\tjsr\t-144(a6)";
 #define IsXDigit(locale, character) __IsXDigit(LocaleBase, (locale), (character))
 
-struct Catalog * __OpenCatalogA(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") STRPTR name, __reg("a2") struct TagItem * tags)="\tjsr\t-150(a6)";
+struct Catalog * __OpenCatalogA(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") CONST_STRPTR name, __reg("a2") CONST struct TagItem * tags)="\tjsr\t-150(a6)";
 #define OpenCatalogA(locale, name, tags) __OpenCatalogA(LocaleBase, (locale), (name), (tags))
 
 #if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
-struct Catalog * __OpenCatalog(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") STRPTR name, Tag tags, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-150(a6)\n\tmovea.l\t(a7)+,a2";
-#define OpenCatalog(locale, name, ...) __OpenCatalog(LocaleBase, (locale), (name), __VA_ARGS__)
+struct Catalog * __OpenCatalog(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") CONST_STRPTR name, ...)="\tmove.l\ta2,-(a7)\n\tlea\t4(a7),a2\n\tjsr\t-150(a6)\n\tmovea.l\t(a7)+,a2";
+#define OpenCatalog(locale, ...) __OpenCatalog(LocaleBase, (locale), __VA_ARGS__)
 #endif
 
-struct Locale * __OpenLocale(__reg("a6") void *, __reg("a0") STRPTR name)="\tjsr\t-156(a6)";
+struct Locale * __OpenLocale(__reg("a6") void *, __reg("a0") CONST_STRPTR name)="\tjsr\t-156(a6)";
 #define OpenLocale(name) __OpenLocale(LocaleBase, (name))
 
-BOOL __ParseDate(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") struct DateStamp * date, __reg("a2") STRPTR fmtTemplate, __reg("a3") struct Hook * getCharFunc)="\tjsr\t-162(a6)";
+BOOL __ParseDate(__reg("a6") void *, __reg("a0") CONST struct Locale * locale, __reg("a1") struct DateStamp * date, __reg("a2") CONST_STRPTR fmtTemplate, __reg("a3") struct Hook * getCharFunc)="\tjsr\t-162(a6)";
 #define ParseDate(locale, date, fmtTemplate, getCharFunc) __ParseDate(LocaleBase, (locale), (date), (fmtTemplate), (getCharFunc))
 
-ULONG __StrConvert(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") STRPTR string, __reg("a2") APTR buffer, __reg("d0") ULONG bufferSize, __reg("d1") ULONG type)="\tjsr\t-174(a6)";
+ULONG __StrConvert(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") CONST_STRPTR string, __reg("a2") APTR buffer, __reg("d0") ULONG bufferSize, __reg("d1") ULONG type)="\tjsr\t-174(a6)";
 #define StrConvert(locale, string, buffer, bufferSize, type) __StrConvert(LocaleBase, (locale), (string), (buffer), (bufferSize), (type))
 
-LONG __StrnCmp(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") STRPTR string1, __reg("a2") STRPTR string2, __reg("d0") LONG length, __reg("d1") ULONG type)="\tjsr\t-180(a6)";
+LONG __StrnCmp(__reg("a6") void *, __reg("a0") struct Locale * locale, __reg("a1") CONST_STRPTR string1, __reg("a2") CONST_STRPTR string2, __reg("d0") LONG length, __reg("d1") ULONG type)="\tjsr\t-180(a6)";
 #define StrnCmp(locale, string1, string2, length, type) __StrnCmp(LocaleBase, (locale), (string1), (string2), (length), (type))
 
 #endif /*  _VBCCINLINE_LOCALE_H  */

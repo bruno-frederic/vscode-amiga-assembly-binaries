@@ -5,7 +5,7 @@
 #include <exec/types.h>
 #endif
 
-VOID __SetKeyMapDefault(__reg("a6") void *, __reg("a0") CONST struct KeyMap * keyMap)="\tjsr\t-30(a6)";
+VOID __SetKeyMapDefault(__reg("a6") void *, __reg("a0") struct KeyMap * keyMap)="\tjsr\t-30(a6)";
 #define SetKeyMapDefault(keyMap) __SetKeyMapDefault(KeymapBase, (keyMap))
 
 struct KeyMap * __AskKeyMapDefault(__reg("a6") void *)="\tjsr\t-36(a6)";

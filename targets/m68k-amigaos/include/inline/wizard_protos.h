@@ -81,6 +81,14 @@ BOOL __WZ_SnapShot(__reg("a6") void *, __reg("a0") APTR surface, Tag tagptr, ...
 #define WZ_SnapShot(surface, ...) __WZ_SnapShot(WizardBase, (surface), __VA_ARGS__)
 #endif
 
+BOOL __WZ_GadgetKeyA(__reg("a6") void *, __reg("a0") struct WizardWindowHandle * windowhandle, __reg("d0") ULONG code, __reg("d1") ULONG Qualifier, __reg("a1") struct TagItem * tags)="\tjsr\t-132(a6)";
+#define WZ_GadgetKeyA(windowhandle, code, Qualifier, tags) __WZ_GadgetKeyA(WizardBase, (windowhandle), (code), (Qualifier), (tags))
+
+#if !defined(NO_INLINE_STDARG) && (__STDC__ == 1L) && (__STDC_VERSION__ >= 199901L)
+BOOL __WZ_GadgetKey(__reg("a6") void *, __reg("a0") struct WizardWindowHandle * windowhandle, __reg("d0") ULONG code, __reg("d1") ULONG Qualifier, Tag tags, ...)="\tmove.l\ta1,-(a7)\n\tlea\t4(a7),a1\n\tjsr\t-132(a6)\n\tmovea.l\t(a7)+,a1";
+#define WZ_GadgetKey(windowhandle, code, Qualifier, ...) __WZ_GadgetKey(WizardBase, (windowhandle), (code), (Qualifier), __VA_ARGS__)
+#endif
+
 BOOL __WZ_DrawVImageA(__reg("a6") void *, __reg("a0") struct WizardVImage * vimage, __reg("d0") WORD x, __reg("d1") WORD y, __reg("d2") WORD w, __reg("d3") WORD h, __reg("d4") WORD type, __reg("d5") struct RastPort * rp, __reg("d6") struct DrawInfo * drinfo, __reg("a1") struct TagItem * tagptr)="\tjsr\t-138(a6)";
 #define WZ_DrawVImageA(vimage, x, y, w, h, type, rp, drinfo, tagptr) __WZ_DrawVImageA(WizardBase, (vimage), (x), (y), (w), (h), (type), (rp), (drinfo), (tagptr))
 
